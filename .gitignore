@@ -1,1 +1,5 @@
 /progress/*
+
+/quantization/models/*
+
+!/quantization/models/.gitkeep
