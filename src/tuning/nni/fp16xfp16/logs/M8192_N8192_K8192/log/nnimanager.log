@@ -1,0 +1,403 @@
+[2023-05-02 16:06:47] INFO (main) Start NNI manager
+[2023-05-02 16:06:47] DEBUG (SqlDB) Database directory: /workspace/v-leiwang3/GPTQ-tvm/src/tuning/nni/fp16xfp16/logs/M8192_N8192_K8192/db
+[2023-05-02 16:06:47] INFO (NNIDataStore) Datastore initialization done
+[2023-05-02 16:06:47] INFO (RestServer) Starting REST server at port 8090, URL prefix: "/"
+[2023-05-02 16:06:47] INFO (RestServer) REST server started.
+[2023-05-02 16:06:47] DEBUG (main) start() returned.
+[2023-05-02 16:06:47] DEBUG (NNIRestHandler) GET: /check-status: body: {}
+[2023-05-02 16:06:47] DEBUG (NNIRestHandler) POST: /experiment: body: {
+  experimentType: 'hpo',
+  searchSpace: {
+    block_row_warps: { _type: 'choice', _value: [Array] },
+    block_col_warps: { _type: 'choice', _value: [Array] },
+    BM: { _type: 'choice', _value: [Array] },
+    BN: { _type: 'choice', _value: [Array] },
+    BK: { _type: 'choice', _value: [Array] },
+    raster: { _type: 'choice', _value: [Array] },
+    stage: { _type: 'choice', _value: [Array] }
+  },
+  trialCommand: 'python3 ./fp16xfp16_nt_padwmma_template.py --M 8192 --N 8192 --K 8192',
+  trialCodeDirectory: '/workspace/v-leiwang3/GPTQ-tvm/src/tuning/nni/fp16xfp16',
+  trialConcurrency: 2,
+  trialGpuNumber: 1,
+  maxTrialNumber: 1000,
+  useAnnotation: false,
+  debug: false,
+  logLevel: 'info',
+  experimentWorkingDirectory: '/workspace/v-leiwang3/GPTQ-tvm/src/tuning/nni/fp16xfp16/logs',
+  tunerGpuIndices: [ 1 ],
+  tuner: {
+    name: 'Evolution',
+    classArgs: { optimize_mode: 'minimize', population_size: 2048 }
+  },
+  trainingService: {
+    platform: 'local',
+    trialCommand: 'python3 ./fp16xfp16_nt_padwmma_template.py --M 8192 --N 8192 --K 8192',
+    trialCodeDirectory: '/workspace/v-leiwang3/GPTQ-tvm/src/tuning/nni/fp16xfp16',
+    trialGpuNumber: 1,
+    debug: false,
+    useActiveGpu: true,
+    maxTrialNumberPerGpu: 1,
+    gpuIndices: [ 1 ],
+    reuseMode: false
+  }
+}
+[2023-05-02 16:06:47] INFO (NNIManager) Starting experiment: M8192_N8192_K8192
+[2023-05-02 16:06:47] INFO (NNIManager) Setup training service...
+[2023-05-02 16:06:48] INFO (LocalTrainingService) Construct local machine training service.
+[2023-05-02 16:06:48] INFO (NNIManager) Setup tuner...
+[2023-05-02 16:06:48] DEBUG (NNIManager) dispatcher command: /usr/bin/python,-m,nni,--exp_params,eyJleHBlcmltZW50VHlwZSI6ImhwbyIsInRyaWFsQ29tbWFuZCI6InB5dGhvbjMgLi9mcDE2eGZwMTZfbnRfcGFkd21tYV90ZW1wbGF0ZS5weSAtLU0gODE5MiAtLU4gODE5MiAtLUsgODE5MiIsInRyaWFsQ29kZURpcmVjdG9yeSI6Ii93b3Jrc3BhY2Uvdi1sZWl3YW5nMy9HUFRRLXR2bS9zcmMvdHVuaW5nL25uaS9mcDE2eGZwMTYiLCJ0cmlhbENvbmN1cnJlbmN5IjoyLCJ0cmlhbEdwdU51bWJlciI6MSwibWF4VHJpYWxOdW1iZXIiOjEwMDAsInVzZUFubm90YXRpb24iOmZhbHNlLCJkZWJ1ZyI6ZmFsc2UsImxvZ0xldmVsIjoiaW5mbyIsImV4cGVyaW1lbnRXb3JraW5nRGlyZWN0b3J5IjoiL3dvcmtzcGFjZS92LWxlaXdhbmczL0dQVFEtdHZtL3NyYy90dW5pbmcvbm5pL2ZwMTZ4ZnAxNi9sb2dzIiwidHVuZXJHcHVJbmRpY2VzIjpbMV0sInR1bmVyIjp7Im5hbWUiOiJFdm9sdXRpb24iLCJjbGFzc0FyZ3MiOnsib3B0aW1pemVfbW9kZSI6Im1pbmltaXplIiwicG9wdWxhdGlvbl9zaXplIjoyMDQ4fX0sInRyYWluaW5nU2VydmljZSI6eyJwbGF0Zm9ybSI6ImxvY2FsIiwidHJpYWxDb21tYW5kIjoicHl0aG9uMyAuL2ZwMTZ4ZnAxNl9udF9wYWR3bW1hX3RlbXBsYXRlLnB5IC0tTSA4MTkyIC0tTiA4MTkyIC0tSyA4MTkyIiwidHJpYWxDb2RlRGlyZWN0b3J5IjoiL3dvcmtzcGFjZS92LWxlaXdhbmczL0dQVFEtdHZtL3NyYy90dW5pbmcvbm5pL2ZwMTZ4ZnAxNiIsInRyaWFsR3B1TnVtYmVyIjoxLCJkZWJ1ZyI6ZmFsc2UsInVzZUFjdGl2ZUdwdSI6dHJ1ZSwibWF4VHJpYWxOdW1iZXJQZXJHcHUiOjEsImdwdUluZGljZXMiOlsxXSwicmV1c2VNb2RlIjpmYWxzZX19
+[2023-05-02 16:06:48] INFO (NNIManager) Change NNIManager status from: INITIALIZED to: RUNNING
+[2023-05-02 16:06:48] DEBUG (tuner_command_channel.WebSocketChannel) Waiting connection...
+[2023-05-02 16:06:48] DEBUG (NNIRestHandler) GET: /check-status: body: {}
+[2023-05-02 16:06:48] DEBUG (tuner_command_channel.WebSocketChannel) Connected.
+[2023-05-02 16:06:48] INFO (NNIManager) Add event listeners
+[2023-05-02 16:06:48] DEBUG (NNIManager) Send tuner command: INITIALIZE: [object Object]
+[2023-05-02 16:06:48] DEBUG (tuner_command_channel.WebSocketChannel) Sending IN{"block_row_warps":{"_type":"choice","_value":[1,2,4,8,16]},"block_col_warps":{"_type":"choice","_value":[1,2,4,8,16]},"BM":{"_type":"choice","_value":[64,128,256]},"BN":{"_type":"choice","_value":[64,128,256]},"BK":{"_type":"choice","_value":[16,32,64]},"raster":{"_type":"choice","_value":[0,8,16]},"stage":{"_type":"choice","_value":[1,2,3]}}
+[2023-05-02 16:06:48] INFO (LocalTrainingService) Run local machine training service.
+[2023-05-02 16:06:48] WARNING (GPUScheduler) gpu_metrics file does not exist!
+[2023-05-02 16:06:48] DEBUG (tuner_command_channel.WebSocketChannel) Received ID
+[2023-05-02 16:06:48] INFO (NNIManager) NNIManager received command from dispatcher: ID, 
+[2023-05-02 16:06:48] DEBUG (tuner_command_channel.WebSocketChannel) Sending GE2
+[2023-05-02 16:06:48] DEBUG (tuner_command_channel.WebSocketChannel) Received TR{"parameter_id": 0, "parameter_source": "algorithm", "parameters": {"block_row_warps": 1, "block_col_warps": 8, "BM": 128, "BN": 64, "BK": 32, "raster": 0, "stage": 2}, "parameter_index": 0}
+[2023-05-02 16:06:48] INFO (NNIManager) NNIManager received command from dispatcher: TR, {"parameter_id": 0, "parameter_source": "algorithm", "parameters": {"block_row_warps": 1, "block_col_warps": 8, "BM": 128, "BN": 64, "BK": 32, "raster": 0, "stage": 2}, "parameter_index": 0}
+[2023-05-02 16:06:48] DEBUG (tuner_command_channel.WebSocketChannel) Received TR{"parameter_id": 1, "parameter_source": "algorithm", "parameters": {"block_row_warps": 4, "block_col_warps": 1, "BM": 128, "BN": 256, "BK": 16, "raster": 16, "stage": 2}, "parameter_index": 0}
+[2023-05-02 16:06:48] INFO (NNIManager) NNIManager received command from dispatcher: TR, {"parameter_id": 1, "parameter_source": "algorithm", "parameters": {"block_row_warps": 4, "block_col_warps": 1, "BM": 128, "BN": 256, "BK": 16, "raster": 16, "stage": 2}, "parameter_index": 0}
+[2023-05-02 16:06:53] INFO (NNIManager) submitTrialJob: form: {
+  sequenceId: 0,
+  hyperParameters: {
+    value: '{"parameter_id": 0, "parameter_source": "algorithm", "parameters": {"block_row_warps": 1, "block_col_warps": 8, "BM": 128, "BN": 64, "BK": 32, "raster": 0, "stage": 2}, "parameter_index": 0}',
+    index: 0
+  },
+  placementConstraint: { type: 'None', gpus: [] }
+}
+[2023-05-02 16:06:53] DEBUG (LocalTrainingService) submitTrialJob: return: LocalTrialJobDetail {
+  id: 'xqRY3',
+  status: 'WAITING',
+  submitTime: 1683043613421,
+  startTime: undefined,
+  endTime: undefined,
+  tags: undefined,
+  url: 'file://localhost:/workspace/v-leiwang3/GPTQ-tvm/src/tuning/nni/fp16xfp16/logs/M8192_N8192_K8192/trials/xqRY3',
+  workingDirectory: '/workspace/v-leiwang3/GPTQ-tvm/src/tuning/nni/fp16xfp16/logs/M8192_N8192_K8192/trials/xqRY3',
+  form: {
+    sequenceId: 0,
+    hyperParameters: {
+      value: '{"parameter_id": 0, "parameter_source": "algorithm", "parameters": {"block_row_warps": 1, "block_col_warps": 8, "BM": 128, "BN": 64, "BK": 32, "raster": 0, "stage": 2}, "parameter_index": 0}',
+      index: 0
+    },
+    placementConstraint: { type: 'None', gpus: [] }
+  },
+  pid: undefined,
+  gpuIndices: []
+}
+[2023-05-02 16:06:53] INFO (NNIManager) submitTrialJob: form: {
+  sequenceId: 1,
+  hyperParameters: {
+    value: '{"parameter_id": 1, "parameter_source": "algorithm", "parameters": {"block_row_warps": 4, "block_col_warps": 1, "BM": 128, "BN": 256, "BK": 16, "raster": 16, "stage": 2}, "parameter_index": 0}',
+    index: 0
+  },
+  placementConstraint: { type: 'None', gpus: [] }
+}
+[2023-05-02 16:06:53] DEBUG (LocalTrainingService) submitTrialJob: return: LocalTrialJobDetail {
+  id: 'KxjgU',
+  status: 'WAITING',
+  submitTime: 1683043613478,
+  startTime: undefined,
+  endTime: undefined,
+  tags: undefined,
+  url: 'file://localhost:/workspace/v-leiwang3/GPTQ-tvm/src/tuning/nni/fp16xfp16/logs/M8192_N8192_K8192/trials/KxjgU',
+  workingDirectory: '/workspace/v-leiwang3/GPTQ-tvm/src/tuning/nni/fp16xfp16/logs/M8192_N8192_K8192/trials/KxjgU',
+  form: {
+    sequenceId: 1,
+    hyperParameters: {
+      value: '{"parameter_id": 1, "parameter_source": "algorithm", "parameters": {"block_row_warps": 4, "block_col_warps": 1, "BM": 128, "BN": 256, "BK": 16, "raster": 16, "stage": 2}, "parameter_index": 0}',
+      index: 0
+    },
+    placementConstraint: { type: 'None', gpus: [] }
+  },
+  pid: undefined,
+  gpuIndices: []
+}
+[2023-05-02 16:06:58] DEBUG (NNIRestHandler) GET: /check-status: body: {}
+[2023-05-02 16:06:58] INFO (NNIManager) Trial job xqRY3 status changed from WAITING to RUNNING
+[2023-05-02 16:07:08] DEBUG (NNIRestHandler) GET: /check-status: body: {}
+[2023-05-02 16:07:08] DEBUG (LocalTrainingService) trialJob status update: xqRY3, FAILED
+[2023-05-02 16:07:08] INFO (NNIManager) Trial job xqRY3 status changed from RUNNING to FAILED
+[2023-05-02 16:07:08] DEBUG (tuner_command_channel.WebSocketChannel) Sending EN{"trial_job_id":"xqRY3","event":"FAILED","hyper_params":"{\"parameter_id\": 0, \"parameter_source\": \"algorithm\", \"parameters\": {\"block_row_warps\": 1, \"block_col_warps\": 8, \"BM\": 128, \"BN\": 64, \"BK\": 32, \"raster\": 0, \"stage\": 2}, \"parameter_index\": 0}"}
+[2023-05-02 16:07:08] DEBUG (tuner_command_channel.WebSocketChannel) Sending GE1
+[2023-05-02 16:07:08] DEBUG (tuner_command_channel.WebSocketChannel) Received TR{"parameter_id": 2, "parameter_source": "algorithm", "parameters": {"block_row_warps": 2, "block_col_warps": 8, "BM": 64, "BN": 256, "BK": 64, "raster": 16, "stage": 1}, "parameter_index": 0}
+[2023-05-02 16:07:08] INFO (NNIManager) NNIManager received command from dispatcher: TR, {"parameter_id": 2, "parameter_source": "algorithm", "parameters": {"block_row_warps": 2, "block_col_warps": 8, "BM": 64, "BN": 256, "BK": 64, "raster": 16, "stage": 1}, "parameter_index": 0}
+[2023-05-02 16:07:13] INFO (NNIManager) Trial job KxjgU status changed from WAITING to RUNNING
+[2023-05-02 16:07:13] INFO (NNIManager) submitTrialJob: form: {
+  sequenceId: 2,
+  hyperParameters: {
+    value: '{"parameter_id": 2, "parameter_source": "algorithm", "parameters": {"block_row_warps": 2, "block_col_warps": 8, "BM": 64, "BN": 256, "BK": 64, "raster": 16, "stage": 1}, "parameter_index": 0}',
+    index: 0
+  },
+  placementConstraint: { type: 'None', gpus: [] }
+}
+[2023-05-02 16:07:13] DEBUG (LocalTrainingService) submitTrialJob: return: LocalTrialJobDetail {
+  id: 'SVLBg',
+  status: 'WAITING',
+  submitTime: 1683043633683,
+  startTime: undefined,
+  endTime: undefined,
+  tags: undefined,
+  url: 'file://localhost:/workspace/v-leiwang3/GPTQ-tvm/src/tuning/nni/fp16xfp16/logs/M8192_N8192_K8192/trials/SVLBg',
+  workingDirectory: '/workspace/v-leiwang3/GPTQ-tvm/src/tuning/nni/fp16xfp16/logs/M8192_N8192_K8192/trials/SVLBg',
+  form: {
+    sequenceId: 2,
+    hyperParameters: {
+      value: '{"parameter_id": 2, "parameter_source": "algorithm", "parameters": {"block_row_warps": 2, "block_col_warps": 8, "BM": 64, "BN": 256, "BK": 64, "raster": 16, "stage": 1}, "parameter_index": 0}',
+      index: 0
+    },
+    placementConstraint: { type: 'None', gpus: [] }
+  },
+  pid: undefined,
+  gpuIndices: []
+}
+[2023-05-02 16:07:18] DEBUG (NNIRestHandler) GET: /check-status: body: {}
+[2023-05-02 16:07:21] DEBUG (NNIManager) NNIManager received trial job metrics: {
+  id: 'KxjgU',
+  data: '{"parameter_id": 1, "trial_job_id": "KxjgU", "type": "FINAL", "sequence": 0, "value": "10.826751666666667"}\n'
+}
+[2023-05-02 16:07:21] DEBUG (LocalTrainingService) Sending metrics, job id: KxjgU, metrics: {"parameter_id": 1, "trial_job_id": "KxjgU", "type": "FINAL", "sequence": 0, "value": "10.826751666666667"}
+
+[2023-05-02 16:07:21] DEBUG (tuner_command_channel.WebSocketChannel) Sending ME{"parameter_id": 1, "trial_job_id": "KxjgU", "type": "FINAL", "sequence": 0, "value": "10.826751666666667"}
+
+[2023-05-02 16:07:23] DEBUG (LocalTrainingService) trialJob status update: KxjgU, SUCCEEDED
+[2023-05-02 16:07:23] INFO (NNIManager) Trial job KxjgU status changed from RUNNING to SUCCEEDED
+[2023-05-02 16:07:23] DEBUG (tuner_command_channel.WebSocketChannel) Sending EN{"trial_job_id":"KxjgU","event":"SUCCEEDED","hyper_params":"{\"parameter_id\": 1, \"parameter_source\": \"algorithm\", \"parameters\": {\"block_row_warps\": 4, \"block_col_warps\": 1, \"BM\": 128, \"BN\": 256, \"BK\": 16, \"raster\": 16, \"stage\": 2}, \"parameter_index\": 0}"}
+[2023-05-02 16:07:23] DEBUG (tuner_command_channel.WebSocketChannel) Sending GE1
+[2023-05-02 16:07:23] DEBUG (tuner_command_channel.WebSocketChannel) Received TR{"parameter_id": 3, "parameter_source": "algorithm", "parameters": {"block_row_warps": 1, "block_col_warps": 1, "BM": 128, "BN": 256, "BK": 32, "raster": 8, "stage": 2}, "parameter_index": 0}
+[2023-05-02 16:07:23] INFO (NNIManager) NNIManager received command from dispatcher: TR, {"parameter_id": 3, "parameter_source": "algorithm", "parameters": {"block_row_warps": 1, "block_col_warps": 1, "BM": 128, "BN": 256, "BK": 32, "raster": 8, "stage": 2}, "parameter_index": 0}
+[2023-05-02 16:07:28] DEBUG (NNIRestHandler) GET: /check-status: body: {}
+[2023-05-02 16:07:28] INFO (NNIManager) Trial job SVLBg status changed from WAITING to RUNNING
+[2023-05-02 16:07:28] INFO (NNIManager) submitTrialJob: form: {
+  sequenceId: 3,
+  hyperParameters: {
+    value: '{"parameter_id": 3, "parameter_source": "algorithm", "parameters": {"block_row_warps": 1, "block_col_warps": 1, "BM": 128, "BN": 256, "BK": 32, "raster": 8, "stage": 2}, "parameter_index": 0}',
+    index: 0
+  },
+  placementConstraint: { type: 'None', gpus: [] }
+}
+[2023-05-02 16:07:28] DEBUG (LocalTrainingService) submitTrialJob: return: LocalTrialJobDetail {
+  id: 'a9guO',
+  status: 'WAITING',
+  submitTime: 1683043648813,
+  startTime: undefined,
+  endTime: undefined,
+  tags: undefined,
+  url: 'file://localhost:/workspace/v-leiwang3/GPTQ-tvm/src/tuning/nni/fp16xfp16/logs/M8192_N8192_K8192/trials/a9guO',
+  workingDirectory: '/workspace/v-leiwang3/GPTQ-tvm/src/tuning/nni/fp16xfp16/logs/M8192_N8192_K8192/trials/a9guO',
+  form: {
+    sequenceId: 3,
+    hyperParameters: {
+      value: '{"parameter_id": 3, "parameter_source": "algorithm", "parameters": {"block_row_warps": 1, "block_col_warps": 1, "BM": 128, "BN": 256, "BK": 32, "raster": 8, "stage": 2}, "parameter_index": 0}',
+      index: 0
+    },
+    placementConstraint: { type: 'None', gpus: [] }
+  },
+  pid: undefined,
+  gpuIndices: []
+}
+[2023-05-02 16:07:37] DEBUG (NNIManager) NNIManager received trial job metrics: {
+  id: 'SVLBg',
+  data: '{"parameter_id": 2, "trial_job_id": "SVLBg", "type": "FINAL", "sequence": 0, "value": "30.175231666666665"}\n'
+}
+[2023-05-02 16:07:37] DEBUG (LocalTrainingService) Sending metrics, job id: SVLBg, metrics: {"parameter_id": 2, "trial_job_id": "SVLBg", "type": "FINAL", "sequence": 0, "value": "30.175231666666665"}
+
+[2023-05-02 16:07:37] DEBUG (tuner_command_channel.WebSocketChannel) Sending ME{"parameter_id": 2, "trial_job_id": "SVLBg", "type": "FINAL", "sequence": 0, "value": "30.175231666666665"}
+
+[2023-05-02 16:07:38] DEBUG (NNIRestHandler) GET: /check-status: body: {}
+[2023-05-02 16:07:38] DEBUG (LocalTrainingService) trialJob status update: SVLBg, SUCCEEDED
+[2023-05-02 16:07:38] INFO (NNIManager) Trial job SVLBg status changed from RUNNING to SUCCEEDED
+[2023-05-02 16:07:38] DEBUG (tuner_command_channel.WebSocketChannel) Sending EN{"trial_job_id":"SVLBg","event":"SUCCEEDED","hyper_params":"{\"parameter_id\": 2, \"parameter_source\": \"algorithm\", \"parameters\": {\"block_row_warps\": 2, \"block_col_warps\": 8, \"BM\": 64, \"BN\": 256, \"BK\": 64, \"raster\": 16, \"stage\": 1}, \"parameter_index\": 0}"}
+[2023-05-02 16:07:38] DEBUG (tuner_command_channel.WebSocketChannel) Sending GE1
+[2023-05-02 16:07:38] DEBUG (tuner_command_channel.WebSocketChannel) Received TR{"parameter_id": 4, "parameter_source": "algorithm", "parameters": {"block_row_warps": 4, "block_col_warps": 8, "BM": 64, "BN": 128, "BK": 16, "raster": 8, "stage": 3}, "parameter_index": 0}
+[2023-05-02 16:07:38] INFO (NNIManager) NNIManager received command from dispatcher: TR, {"parameter_id": 4, "parameter_source": "algorithm", "parameters": {"block_row_warps": 4, "block_col_warps": 8, "BM": 64, "BN": 128, "BK": 16, "raster": 8, "stage": 3}, "parameter_index": 0}
+[2023-05-02 16:07:43] INFO (NNIManager) Trial job a9guO status changed from WAITING to RUNNING
+[2023-05-02 16:07:43] INFO (NNIManager) submitTrialJob: form: {
+  sequenceId: 4,
+  hyperParameters: {
+    value: '{"parameter_id": 4, "parameter_source": "algorithm", "parameters": {"block_row_warps": 4, "block_col_warps": 8, "BM": 64, "BN": 128, "BK": 16, "raster": 8, "stage": 3}, "parameter_index": 0}',
+    index: 0
+  },
+  placementConstraint: { type: 'None', gpus: [] }
+}
+[2023-05-02 16:07:43] DEBUG (LocalTrainingService) submitTrialJob: return: LocalTrialJobDetail {
+  id: 'uFq2Z',
+  status: 'WAITING',
+  submitTime: 1683043663983,
+  startTime: undefined,
+  endTime: undefined,
+  tags: undefined,
+  url: 'file://localhost:/workspace/v-leiwang3/GPTQ-tvm/src/tuning/nni/fp16xfp16/logs/M8192_N8192_K8192/trials/uFq2Z',
+  workingDirectory: '/workspace/v-leiwang3/GPTQ-tvm/src/tuning/nni/fp16xfp16/logs/M8192_N8192_K8192/trials/uFq2Z',
+  form: {
+    sequenceId: 4,
+    hyperParameters: {
+      value: '{"parameter_id": 4, "parameter_source": "algorithm", "parameters": {"block_row_warps": 4, "block_col_warps": 8, "BM": 64, "BN": 128, "BK": 16, "raster": 8, "stage": 3}, "parameter_index": 0}',
+      index: 0
+    },
+    placementConstraint: { type: 'None', gpus: [] }
+  },
+  pid: undefined,
+  gpuIndices: []
+}
+[2023-05-02 16:07:48] DEBUG (NNIRestHandler) GET: /check-status: body: {}
+[2023-05-02 16:07:53] DEBUG (NNIManager) NNIManager received trial job metrics: {
+  id: 'a9guO',
+  data: '{"parameter_id": 3, "trial_job_id": "a9guO", "type": "FINAL", "sequence": 0, "value": "168.86340300000003"}\n'
+}
+[2023-05-02 16:07:53] DEBUG (LocalTrainingService) Sending metrics, job id: a9guO, metrics: {"parameter_id": 3, "trial_job_id": "a9guO", "type": "FINAL", "sequence": 0, "value": "168.86340300000003"}
+
+[2023-05-02 16:07:53] DEBUG (tuner_command_channel.WebSocketChannel) Sending ME{"parameter_id": 3, "trial_job_id": "a9guO", "type": "FINAL", "sequence": 0, "value": "168.86340300000003"}
+
+[2023-05-02 16:07:54] DEBUG (LocalTrainingService) trialJob status update: a9guO, SUCCEEDED
+[2023-05-02 16:07:54] INFO (NNIManager) Trial job a9guO status changed from RUNNING to SUCCEEDED
+[2023-05-02 16:07:54] DEBUG (tuner_command_channel.WebSocketChannel) Sending EN{"trial_job_id":"a9guO","event":"SUCCEEDED","hyper_params":"{\"parameter_id\": 3, \"parameter_source\": \"algorithm\", \"parameters\": {\"block_row_warps\": 1, \"block_col_warps\": 1, \"BM\": 128, \"BN\": 256, \"BK\": 32, \"raster\": 8, \"stage\": 2}, \"parameter_index\": 0}"}
+[2023-05-02 16:07:54] DEBUG (tuner_command_channel.WebSocketChannel) Sending GE1
+[2023-05-02 16:07:54] DEBUG (tuner_command_channel.WebSocketChannel) Received TR{"parameter_id": 5, "parameter_source": "algorithm", "parameters": {"block_row_warps": 4, "block_col_warps": 16, "BM": 128, "BN": 64, "BK": 16, "raster": 8, "stage": 1}, "parameter_index": 0}
+[2023-05-02 16:07:54] INFO (NNIManager) NNIManager received command from dispatcher: TR, {"parameter_id": 5, "parameter_source": "algorithm", "parameters": {"block_row_warps": 4, "block_col_warps": 16, "BM": 128, "BN": 64, "BK": 16, "raster": 8, "stage": 1}, "parameter_index": 0}
+[2023-05-02 16:07:58] DEBUG (NNIRestHandler) GET: /check-status: body: {}
+[2023-05-02 16:07:59] INFO (NNIManager) Trial job uFq2Z status changed from WAITING to RUNNING
+[2023-05-02 16:07:59] INFO (NNIManager) submitTrialJob: form: {
+  sequenceId: 5,
+  hyperParameters: {
+    value: '{"parameter_id": 5, "parameter_source": "algorithm", "parameters": {"block_row_warps": 4, "block_col_warps": 16, "BM": 128, "BN": 64, "BK": 16, "raster": 8, "stage": 1}, "parameter_index": 0}',
+    index: 0
+  },
+  placementConstraint: { type: 'None', gpus: [] }
+}
+[2023-05-02 16:07:59] DEBUG (LocalTrainingService) submitTrialJob: return: LocalTrialJobDetail {
+  id: 'eCJbQ',
+  status: 'WAITING',
+  submitTime: 1683043679127,
+  startTime: undefined,
+  endTime: undefined,
+  tags: undefined,
+  url: 'file://localhost:/workspace/v-leiwang3/GPTQ-tvm/src/tuning/nni/fp16xfp16/logs/M8192_N8192_K8192/trials/eCJbQ',
+  workingDirectory: '/workspace/v-leiwang3/GPTQ-tvm/src/tuning/nni/fp16xfp16/logs/M8192_N8192_K8192/trials/eCJbQ',
+  form: {
+    sequenceId: 5,
+    hyperParameters: {
+      value: '{"parameter_id": 5, "parameter_source": "algorithm", "parameters": {"block_row_warps": 4, "block_col_warps": 16, "BM": 128, "BN": 64, "BK": 16, "raster": 8, "stage": 1}, "parameter_index": 0}',
+      index: 0
+    },
+    placementConstraint: { type: 'None', gpus: [] }
+  },
+  pid: undefined,
+  gpuIndices: []
+}
+[2023-05-02 16:08:07] DEBUG (NNIManager) NNIManager received trial job metrics: {
+  id: 'uFq2Z',
+  data: '{"parameter_id": 4, "trial_job_id": "uFq2Z", "type": "FINAL", "sequence": 0, "value": "104.58725966666665"}\n'
+}
+[2023-05-02 16:08:07] DEBUG (LocalTrainingService) Sending metrics, job id: uFq2Z, metrics: {"parameter_id": 4, "trial_job_id": "uFq2Z", "type": "FINAL", "sequence": 0, "value": "104.58725966666665"}
+
+[2023-05-02 16:08:07] DEBUG (tuner_command_channel.WebSocketChannel) Sending ME{"parameter_id": 4, "trial_job_id": "uFq2Z", "type": "FINAL", "sequence": 0, "value": "104.58725966666665"}
+
+[2023-05-02 16:08:08] DEBUG (NNIRestHandler) GET: /check-status: body: {}
+[2023-05-02 16:08:09] DEBUG (LocalTrainingService) trialJob status update: uFq2Z, SUCCEEDED
+[2023-05-02 16:08:09] INFO (NNIManager) Trial job uFq2Z status changed from RUNNING to SUCCEEDED
+[2023-05-02 16:08:09] DEBUG (tuner_command_channel.WebSocketChannel) Sending EN{"trial_job_id":"uFq2Z","event":"SUCCEEDED","hyper_params":"{\"parameter_id\": 4, \"parameter_source\": \"algorithm\", \"parameters\": {\"block_row_warps\": 4, \"block_col_warps\": 8, \"BM\": 64, \"BN\": 128, \"BK\": 16, \"raster\": 8, \"stage\": 3}, \"parameter_index\": 0}"}
+[2023-05-02 16:08:09] DEBUG (tuner_command_channel.WebSocketChannel) Sending GE1
+[2023-05-02 16:08:09] DEBUG (tuner_command_channel.WebSocketChannel) Received TR{"parameter_id": 6, "parameter_source": "algorithm", "parameters": {"block_row_warps": 8, "block_col_warps": 16, "BM": 128, "BN": 128, "BK": 16, "raster": 0, "stage": 3}, "parameter_index": 0}
+[2023-05-02 16:08:09] INFO (NNIManager) NNIManager received command from dispatcher: TR, {"parameter_id": 6, "parameter_source": "algorithm", "parameters": {"block_row_warps": 8, "block_col_warps": 16, "BM": 128, "BN": 128, "BK": 16, "raster": 0, "stage": 3}, "parameter_index": 0}
+[2023-05-02 16:08:14] INFO (NNIManager) Trial job eCJbQ status changed from WAITING to RUNNING
+[2023-05-02 16:08:14] INFO (NNIManager) submitTrialJob: form: {
+  sequenceId: 6,
+  hyperParameters: {
+    value: '{"parameter_id": 6, "parameter_source": "algorithm", "parameters": {"block_row_warps": 8, "block_col_warps": 16, "BM": 128, "BN": 128, "BK": 16, "raster": 0, "stage": 3}, "parameter_index": 0}',
+    index: 0
+  },
+  placementConstraint: { type: 'None', gpus: [] }
+}
+[2023-05-02 16:08:14] DEBUG (LocalTrainingService) submitTrialJob: return: LocalTrialJobDetail {
+  id: 'pSMcT',
+  status: 'WAITING',
+  submitTime: 1683043694290,
+  startTime: undefined,
+  endTime: undefined,
+  tags: undefined,
+  url: 'file://localhost:/workspace/v-leiwang3/GPTQ-tvm/src/tuning/nni/fp16xfp16/logs/M8192_N8192_K8192/trials/pSMcT',
+  workingDirectory: '/workspace/v-leiwang3/GPTQ-tvm/src/tuning/nni/fp16xfp16/logs/M8192_N8192_K8192/trials/pSMcT',
+  form: {
+    sequenceId: 6,
+    hyperParameters: {
+      value: '{"parameter_id": 6, "parameter_source": "algorithm", "parameters": {"block_row_warps": 8, "block_col_warps": 16, "BM": 128, "BN": 128, "BK": 16, "raster": 0, "stage": 3}, "parameter_index": 0}',
+      index: 0
+    },
+    placementConstraint: { type: 'None', gpus: [] }
+  },
+  pid: undefined,
+  gpuIndices: []
+}
+[2023-05-02 16:08:18] DEBUG (NNIRestHandler) GET: /check-status: body: {}
+[2023-05-02 16:08:24] DEBUG (LocalTrainingService) trialJob status update: eCJbQ, FAILED
+[2023-05-02 16:08:24] INFO (NNIManager) Trial job eCJbQ status changed from RUNNING to FAILED
+[2023-05-02 16:08:24] DEBUG (tuner_command_channel.WebSocketChannel) Sending EN{"trial_job_id":"eCJbQ","event":"FAILED","hyper_params":"{\"parameter_id\": 5, \"parameter_source\": \"algorithm\", \"parameters\": {\"block_row_warps\": 4, \"block_col_warps\": 16, \"BM\": 128, \"BN\": 64, \"BK\": 16, \"raster\": 8, \"stage\": 1}, \"parameter_index\": 0}"}
+[2023-05-02 16:08:24] DEBUG (tuner_command_channel.WebSocketChannel) Sending GE1
+[2023-05-02 16:08:24] DEBUG (tuner_command_channel.WebSocketChannel) Received TR{"parameter_id": 7, "parameter_source": "algorithm", "parameters": {"block_row_warps": 4, "block_col_warps": 16, "BM": 64, "BN": 256, "BK": 16, "raster": 16, "stage": 1}, "parameter_index": 0}
+[2023-05-02 16:08:24] INFO (NNIManager) NNIManager received command from dispatcher: TR, {"parameter_id": 7, "parameter_source": "algorithm", "parameters": {"block_row_warps": 4, "block_col_warps": 16, "BM": 64, "BN": 256, "BK": 16, "raster": 16, "stage": 1}, "parameter_index": 0}
+[2023-05-02 16:08:28] DEBUG (NNIRestHandler) GET: /check-status: body: {}
+[2023-05-02 16:08:29] INFO (NNIManager) Trial job pSMcT status changed from WAITING to RUNNING
+[2023-05-02 16:08:29] INFO (NNIManager) submitTrialJob: form: {
+  sequenceId: 7,
+  hyperParameters: {
+    value: '{"parameter_id": 7, "parameter_source": "algorithm", "parameters": {"block_row_warps": 4, "block_col_warps": 16, "BM": 64, "BN": 256, "BK": 16, "raster": 16, "stage": 1}, "parameter_index": 0}',
+    index: 0
+  },
+  placementConstraint: { type: 'None', gpus: [] }
+}
+[2023-05-02 16:08:29] DEBUG (LocalTrainingService) submitTrialJob: return: LocalTrialJobDetail {
+  id: 'yDKzK',
+  status: 'WAITING',
+  submitTime: 1683043709433,
+  startTime: undefined,
+  endTime: undefined,
+  tags: undefined,
+  url: 'file://localhost:/workspace/v-leiwang3/GPTQ-tvm/src/tuning/nni/fp16xfp16/logs/M8192_N8192_K8192/trials/yDKzK',
+  workingDirectory: '/workspace/v-leiwang3/GPTQ-tvm/src/tuning/nni/fp16xfp16/logs/M8192_N8192_K8192/trials/yDKzK',
+  form: {
+    sequenceId: 7,
+    hyperParameters: {
+      value: '{"parameter_id": 7, "parameter_source": "algorithm", "parameters": {"block_row_warps": 4, "block_col_warps": 16, "BM": 64, "BN": 256, "BK": 16, "raster": 16, "stage": 1}, "parameter_index": 0}',
+      index: 0
+    },
+    placementConstraint: { type: 'None', gpus: [] }
+  },
+  pid: undefined,
+  gpuIndices: []
+}
+[2023-05-02 16:08:34] DEBUG (LocalTrainingService) trialJob status update: pSMcT, FAILED
+[2023-05-02 16:08:34] INFO (NNIManager) Trial job pSMcT status changed from RUNNING to FAILED
+[2023-05-02 16:08:34] DEBUG (tuner_command_channel.WebSocketChannel) Sending EN{"trial_job_id":"pSMcT","event":"FAILED","hyper_params":"{\"parameter_id\": 6, \"parameter_source\": \"algorithm\", \"parameters\": {\"block_row_warps\": 8, \"block_col_warps\": 16, \"BM\": 128, \"BN\": 128, \"BK\": 16, \"raster\": 0, \"stage\": 3}, \"parameter_index\": 0}"}
+[2023-05-02 16:08:34] DEBUG (tuner_command_channel.WebSocketChannel) Sending GE1
+[2023-05-02 16:08:34] DEBUG (tuner_command_channel.WebSocketChannel) Received TR{"parameter_id": 8, "parameter_source": "algorithm", "parameters": {"block_row_warps": 1, "block_col_warps": 4, "BM": 256, "BN": 256, "BK": 64, "raster": 0, "stage": 2}, "parameter_index": 0}
+[2023-05-02 16:08:34] INFO (NNIManager) NNIManager received command from dispatcher: TR, {"parameter_id": 8, "parameter_source": "algorithm", "parameters": {"block_row_warps": 1, "block_col_warps": 4, "BM": 256, "BN": 256, "BK": 64, "raster": 0, "stage": 2}, "parameter_index": 0}
+[2023-05-02 16:08:37] DEBUG (NNIRestHandler) DELETE: /experiment: body: {}
+[2023-05-02 16:08:37] INFO (ShutdownManager) Initiate shutdown: REST request
+[2023-05-02 16:08:37] INFO (RestServer) Stopping REST server.
+[2023-05-02 16:08:37] INFO (NNIManager) Change NNIManager status from: RUNNING to: STOPPING
+[2023-05-02 16:08:37] INFO (NNIManager) Stopping experiment, cleaning up ...
+[2023-05-02 16:08:37] DEBUG (tuner_command_channel.WebSocketChannel) Sending TE
+[2023-05-02 16:08:37] DEBUG (experiments_manager) Experiment manager: all clean up
+[2023-05-02 16:08:37] INFO (RestServer) REST server stopped.
+[2023-05-02 16:08:37] DEBUG (tuner_command_channel.WebSocketChannel) Silent error: Error: tuner_command_channel: Tuner closed connection
+    at WebSocket.handleWsClose (/usr/local/lib/python3.8/dist-packages/nni_node/core/tuner_command_channel/websocket_channel.js:83:26)
+    at WebSocket.emit (node:events:538:35)
+    at WebSocket.emitClose (/usr/local/lib/python3.8/dist-packages/nni_node/node_modules/express-ws/node_modules/ws/lib/websocket.js:246:10)
+    at Socket.socketOnClose (/usr/local/lib/python3.8/dist-packages/nni_node/node_modules/express-ws/node_modules/ws/lib/websocket.js:1127:15)
+    at Socket.emit (node:events:526:28)
+    at TCP.<anonymous> (node:net:687:12)
+[2023-05-02 16:08:38] INFO (NNIManager) cancelTrialJob: yDKzK
+[2023-05-02 16:08:38] INFO (LocalTrainingService) Stopping local machine training service...
+[2023-05-02 16:08:38] INFO (NNIManager) Change NNIManager status from: STOPPING to: STOPPED
+[2023-05-02 16:08:38] INFO (NNIManager) Experiment stopped.
+[2023-05-02 16:08:38] INFO (NNITensorboardManager) Forced stopping all tensorboard task.
+[2023-05-02 16:08:38] INFO (NNITensorboardManager) All tensorboard task stopped.
+[2023-05-02 16:08:38] INFO (NNITensorboardManager) Tensorboard manager stopped.
+[2023-05-02 16:08:38] INFO (ShutdownManager) Shutdown complete.

@@ -1,0 +1,20 @@
+[2023-05-02 16:49:57] PRINT <class 'tvm.ir.module.IRModule'>
+[2023-05-02 16:49:57] PRINT # from tvm.script import ir as I
+[2023-05-02 16:49:57] PRINT # from tvm.script import tir as T
+[2023-05-02 16:49:57] PRINT 
+[2023-05-02 16:49:57] PRINT @I.ir_module
+[2023-05-02 16:49:57] PRINT class Module:
+[2023-05-02 16:49:57] PRINT     @T.prim_func
+[2023-05-02 16:49:57] PRINT     def main(A: T.Buffer((64, 8192), "float16"), B: T.Buffer((8192, 8192), "float16"), C: T.Buffer((64, 8192), "float16")):
+[2023-05-02 16:49:57] PRINT         T.func_attr({"global_symbol": "main", "tir.noalias": True})
+[2023-05-02 16:49:57] PRINT         # with T.block("root"):
+[2023-05-02 16:49:57] PRINT         for i, j, k in T.grid(64, 8192, 8192):
+[2023-05-02 16:49:57] PRINT             with T.block("B"):
+[2023-05-02 16:49:57] PRINT                 vi, vj, vk = T.axis.remap("SSR", [i, j, k])
+[2023-05-02 16:49:57] PRINT                 T.reads(A[vi, vk], B[vj, vk])
+[2023-05-02 16:49:57] PRINT                 T.writes(C[vi, vj])
+[2023-05-02 16:49:57] PRINT                 with T.init():
+[2023-05-02 16:49:57] PRINT                     C[vi, vj] = T.float16(0)
+[2023-05-02 16:49:57] PRINT                 C[vi, vj] = C[vi, vj] + A[vi, vk] * B[vj, vk]
+[2023-05-02 16:49:58] PRINT average time cost of 3 runs = 0.221867 ms, 38716.7 GFLOPS.
+[2023-05-02 16:49:58] PRINT average time cost of 3 runs = 0.221867 ms, 38716.7 GFLOPS.

@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "./fp16xfp16_nt_padwmma_template.py", line 128, in <module>
+    sch.reorder(block_k, block_i, block_j, i, j, ko, ki, ii, jj, kernel_i, kernel_j, kernel_k)
+NameError: name 'block_k' is not defined
