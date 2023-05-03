@@ -80,7 +80,9 @@ stage = params['stage']
 warp_row_tiles = BM // (wmma_m * block_row_warps)  
 warp_col_tiles = BN // (wmma_n * block_col_warps)
 chunk = BK // (wmma_k)
+shared_pad = 8
 vec = 8
+
 
 @tvm.script.ir_module
 class MyModule:
@@ -122,14 +124,13 @@ j, kernel_j = sch.split(j, factors=[None, wmma_n])
 k, kernel_k = sch.split(k, factors=[None, wmma_k])
 block_i, i, ii = sch.split(i, factors=[None, block_row_warps, warp_row_tiles])
 block_j, j, jj = sch.split(j, factors=[None, block_col_warps, warp_col_tiles])
-if raster > 0:
-    block_j, block_k = sch.split(block_j, factors=[None, raster])
+block_j, block_k = sch.split(block_j, factors=[None, raster])
 ko, ki = sch.split(k, factors=[None, chunk])
-sch.reorder(block_k, block_i, block_j, i, j, ko, ki, ii, jj, kernel_i, kernel_j, kernel_k)
+sch.reorder(block_k, block_i, block_j, i, j, ko, ki,
+            ii, jj, kernel_i, kernel_j, kernel_k)
 
 write_sch(sch, log_path, "block_tile")
-if raster > 0:
-    sch.bind(block_k, "blockIdx.z")
+sch.bind(block_k, "blockIdx.z")
 sch.bind(block_i, "blockIdx.y")
 sch.bind(block_j, "blockIdx.x")
 sch.bind(i, "threadIdx.y")
@@ -154,6 +155,7 @@ sch.vectorize(A_shared_vi)
 sch.bind(A_shared_tx, "threadIdx.x")
 sch.bind(A_shared_ty, "threadIdx.y")
 sch.bind(A_shared_tz, "threadIdx.z")
+sch.storage_align(block_shared_A, 0, axis=-2, factor=32, offset=shared_pad)
 write_sch(sch, log_path, "schedule_A_shared")
 
 B_shared_fused = sch.fuse(*sch.get_loops(block_shared_B)[-2:])
@@ -163,6 +165,7 @@ sch.vectorize(B_shared_vi)
 sch.bind(B_shared_tx, "threadIdx.x")
 sch.bind(B_shared_ty, "threadIdx.y")
 sch.bind(B_shared_tz, "threadIdx.z")
+sch.storage_align(block_shared_B, 0, axis=-2, factor=32, offset=shared_pad)
 write_sch(sch, log_path, "schedule_B_shared")
 
 A_local_i, A_local_j = sch.get_loops(block_shared_local_A)[-2:]
@@ -190,19 +193,22 @@ init_block_b_i, init_block_b_j = sch.get_loops(init_block_b)[-4:-2]
 sch.tensorize(sch.get_loops(init_block_b)[-2], WMMA_FILL_16x16x16_F16_INTRIN)
 write_sch(sch, log_path,
           "tensorize_fill")
-block_shared_local_A_i, block_shared_local_A_j = sch.get_loops(block_shared_local_A)[-4:-2]
+block_shared_local_A_i, block_shared_local_A_j = sch.get_loops(
+    block_shared_local_A)[-4:-2]
 sch.tensorize(sch.get_loops(block_shared_local_A)
               [-2], WMMA_LOAD_16x16x16_F16_A_INTRIN)
 write_sch(sch, log_path,
           "tensorize_load")
-block_shared_local_B_i, block_shared_local_B_j = sch.get_loops(block_shared_local_B)[-4:-2]
+block_shared_local_B_i, block_shared_local_B_j = sch.get_loops(
+    block_shared_local_B)[-4:-2]
 sch.tensorize(sch.get_loops(block_shared_local_B)
               [-2], WMMA_LOAD_16x16x16_F16_B_TRANS_INTRIN)
 sch.tensorize(kernel_i, WMMA_SYNC_16x16x16_f16f16f16_TRANS_INTRIN)
 
-sch.tensorize(sch.get_loops(block_local_C)[-2], WMMA_STORE_16x16x16_F16_GLOBAL_INTRIN)
+sch.tensorize(sch.get_loops(block_local_C)
+              [-2], WMMA_STORE_16x16x16_F16_GLOBAL_INTRIN)
 write_sch(sch, log_path,
-           "tensorize")
+          "tensorize")
 
 # unroll
 # sch.unroll(init_block_b_i)
@@ -226,22 +232,22 @@ if stage > 1:
     sch.annotate(ko, ann_key="software_pipeline_order",
                  ann_val=[0, 1, 3, 2, 4])
     sch.annotate(ko, ann_key="software_pipeline_async_stages", ann_val=[0])
-    
+
 write_sch(sch, log_path,
-           "do_unroll")
+          "do_unroll")
 
 
 ctx = tvm.cuda(0)
 with tvm.transform.PassContext(config={"tir.use_async_copy": 1}):
     cuda_mod = tvm.build(sch.mod, target="cuda")
-    
+
 write_code(cuda_mod.imported_modules[0].get_source(), log_path, "tmp.cu")
 
 
-@tvm.register_func
-def tvm_callback_cuda_postproc(code):
-    code = code.replace("#define TVM_ENBALE_EFFICIENT_SMEM_PTR_CAST 1", "#define TVM_ENBALE_EFFICIENT_SMEM_PTR_CAST 0")
-    return code
+# @tvm.register_func
+# def tvm_callback_cuda_postproc(code):
+#     code = code.replace("#define TVM_ENBALE_EFFICIENT_SMEM_PTR_CAST 1", "#define TVM_ENBALE_EFFICIENT_SMEM_PTR_CAST 0")
+#     return code
 
 
 a_np = (np.random.rand(M, K)).astype("float16")
@@ -282,4 +288,5 @@ t = timer_cuda_mod(cuda_a, cuda_b, cuda_c).mean
 GFLOPS = num_flops / (t * 1e3) / 1e6
 print("average time cost of %d runs = %g ms, %g GFLOPS." %
       (num_runs, t * 1e3, GFLOPS))
+
 nni.report_final_result(t * 1e3)
