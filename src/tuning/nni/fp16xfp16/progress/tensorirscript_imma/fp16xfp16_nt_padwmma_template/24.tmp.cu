@@ -336,36 +336,32 @@ CUDA_UNSUPPORTED_HALF_MATH_UNARY(herf, erf)
   #define int64_t long long
   #define uint64_t unsigned long long
 #endif
-extern "C" __global__ void __launch_bounds__(64) main_kernel0(half* __restrict__ A, half* __restrict__ B, half* __restrict__ C) {
-  nvcuda::wmma::fragment<nvcuda::wmma::accumulator, 16, 16, 16, half> C_wmma_accumulator[8];
-  __shared__ half A_shared[2048];
-  __shared__ half B_shared[8192];
+extern "C" __global__ void __launch_bounds__(256) main_kernel0(half* __restrict__ A, half* __restrict__ B, half* __restrict__ C) {
+  nvcuda::wmma::fragment<nvcuda::wmma::accumulator, 16, 16, 16, half> C_wmma_accumulator[2];
+  __shared__ half A_shared[2560];
+  __shared__ half B_shared[2560];
   nvcuda::wmma::fragment<nvcuda::wmma::matrix_a, 16, 16, 16, half, nvcuda::wmma::row_major> A_shared_wmma_matrix_a[1];
-  nvcuda::wmma::fragment<nvcuda::wmma::matrix_b, 16, 16, 16, half, nvcuda::wmma::col_major> B_shared_wmma_matrix_b[8];
-  for (int j_0_2_init = 0; j_0_2_init < 8; ++j_0_2_init) {
+  nvcuda::wmma::fragment<nvcuda::wmma::matrix_b, 16, 16, 16, half, nvcuda::wmma::col_major> B_shared_wmma_matrix_b[2];
+  for (int j_0_2_init = 0; j_0_2_init < 2; ++j_0_2_init) {
     nvcuda::wmma::fill_fragment(C_wmma_accumulator[j_0_2_init], 0.000000e+00f);
   }
-  for (int k_0_0 = 0; k_0_0 < 128; ++k_0_0) {
+  for (int k_0_0 = 0; k_0_0 < 256; ++k_0_0) {
     __syncthreads();
-    for (int ax0_ax1_fused_2 = 0; ax0_ax1_fused_2 < 4; ++ax0_ax1_fused_2) {
-      *(uint4*)(A_shared + (((((int)threadIdx.y) * 1024) + (ax0_ax1_fused_2 * 256)) + (((int)threadIdx.x) * 8))) = *(uint4*)(A + (((((((int)threadIdx.y) * 131072) + (ax0_ax1_fused_2 * 32768)) + ((((int)threadIdx.x) >> 3) * 8192)) + (k_0_0 * 64)) + ((((int)threadIdx.x) & 7) * 8)));
-    }
-    for (int ax0_ax1_fused_2_1 = 0; ax0_ax1_fused_2_1 < 16; ++ax0_ax1_fused_2_1) {
-      *(uint4*)(B_shared + (((((int)threadIdx.y) * 4096) + (ax0_ax1_fused_2_1 * 256)) + (((int)threadIdx.x) * 8))) = *(uint4*)(B + (((((((((int)blockIdx.x) * 8388608) + (((int)blockIdx.z) * 1048576)) + (((int)threadIdx.y) * 524288)) + (ax0_ax1_fused_2_1 * 32768)) + ((((int)threadIdx.x) >> 3) * 8192)) + (k_0_0 * 64)) + ((((int)threadIdx.x) & 7) * 8)));
-    }
+    *(uint4*)(A_shared + ((((((int)threadIdx.y) * 640) + (((int)threadIdx.z) * 320)) + ((((int)threadIdx.x) >> 2) * 40)) + ((((int)threadIdx.x) & 3) * 8))) = *(uint4*)(A + ((((((((int)blockIdx.y) * 524288) + (((int)threadIdx.y) * 131072)) + (((int)threadIdx.z) * 65536)) + ((((int)threadIdx.x) >> 2) * 8192)) + (k_0_0 * 32)) + ((((int)threadIdx.x) & 3) * 8)));
+    *(uint4*)(B_shared + ((((((int)threadIdx.y) * 640) + (((int)threadIdx.z) * 320)) + ((((int)threadIdx.x) >> 2) * 40)) + ((((int)threadIdx.x) & 3) * 8))) = *(uint4*)(B + (((((((((int)blockIdx.x) * 8388608) + (((int)blockIdx.z) * 524288)) + (((int)threadIdx.y) * 131072)) + (((int)threadIdx.z) * 65536)) + ((((int)threadIdx.x) >> 2) * 8192)) + (k_0_0 * 32)) + ((((int)threadIdx.x) & 3) * 8)));
     __syncthreads();
-    for (int k_0_1 = 0; k_0_1 < 4; ++k_0_1) {
-      nvcuda::wmma::load_matrix_sync(A_shared_wmma_matrix_a[0], (&(A_shared[((((int)threadIdx.y) * 1024) + (k_0_1 * 16))])), 64);
-      for (int ax0_0 = 0; ax0_0 < 8; ++ax0_0) {
-        nvcuda::wmma::load_matrix_sync(B_shared_wmma_matrix_b[ax0_0], (&(B_shared[((ax0_0 * 1024) + (k_0_1 * 16))])), 64);
+    for (int k_0_1 = 0; k_0_1 < 2; ++k_0_1) {
+      nvcuda::wmma::load_matrix_sync(A_shared_wmma_matrix_a[0], (&(A_shared[((((int)threadIdx.y) * 640) + (k_0_1 * 16))])), 40);
+      for (int ax0_0 = 0; ax0_0 < 2; ++ax0_0) {
+        nvcuda::wmma::load_matrix_sync(B_shared_wmma_matrix_b[ax0_0], (&(B_shared[(((((int)threadIdx.z) * 1280) + (ax0_0 * 640)) + (k_0_1 * 16))])), 40);
       }
-      for (int j_0_2 = 0; j_0_2 < 8; ++j_0_2) {
+      for (int j_0_2 = 0; j_0_2 < 2; ++j_0_2) {
         nvcuda::wmma::mma_sync(C_wmma_accumulator[j_0_2], A_shared_wmma_matrix_a[0], B_shared_wmma_matrix_b[j_0_2], C_wmma_accumulator[j_0_2]);
       }
     }
   }
-  for (int ax1_0 = 0; ax1_0 < 8; ++ax1_0) {
-    nvcuda::wmma::store_matrix_sync((&(C[((((((int)threadIdx.y) * 131072) + (((int)blockIdx.x) * 1024)) + (((int)blockIdx.z) * 128)) + (ax1_0 * 16))])), C_wmma_accumulator[ax1_0], 8192, nvcuda::wmma::mem_row_major);
+  for (int ax1_0 = 0; ax1_0 < 2; ++ax1_0) {
+    nvcuda::wmma::store_matrix_sync((&(C[((((((((int)blockIdx.y) * 524288) + (((int)threadIdx.y) * 131072)) + (((int)blockIdx.x) * 1024)) + (((int)blockIdx.z) * 64)) + (((int)threadIdx.z) * 32)) + (ax1_0 * 16))])), C_wmma_accumulator[ax1_0], 8192, nvcuda::wmma::mem_row_major);
   }
 }
 

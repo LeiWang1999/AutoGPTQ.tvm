@@ -1,30 +1,30 @@
 #[version = "0.0.5"]
 @main = primfn(a: handle, b: handle, c: handle) -> ()
   attr = {"tir.noalias": True, "global_symbol": "main"}
-  buffers = {A: Buffer(A_1: Pointer(global float16), float16, [32, 8192], []),
+  buffers = {A: Buffer(A_1: Pointer(global float16), float16, [128, 8192], []),
              B: Buffer(B_1: Pointer(global float16), float16, [8192, 8192], []),
-             C: Buffer(C_1: Pointer(global float16), float16, [32, 8192], [])}
+             C: Buffer(C_1: Pointer(global float16), float16, [128, 8192], [])}
   buffer_map = {a: A, b: B, c: C} {
   block([], "root") {
     tir.reads([])
     tir.writes([])
-    A_shared = alloc_buffer(float16[32, 8192])
-    A_shared_wmma.matrix_a = alloc_buffer(float16[32, 8192])
+    A_shared = alloc_buffer(float16[128, 8192])
+    A_shared_wmma.matrix_a = alloc_buffer(float16[128, 8192])
     B_shared = alloc_buffer(float16[8192, 8192])
     B_shared_wmma.matrix_b = alloc_buffer(float16[8192, 8192])
-    C_wmma.accumulator = alloc_buffer(float16[32, 8192])
+    C_wmma.accumulator = alloc_buffer(float16[128, 8192])
     for (j_0_0_1: int32, 0, 8) "thread_binding" {
       for (i_0_0: int32, 0, 1) "thread_binding" {
-        for (j_0_0_0: int32, 0, 8) "thread_binding" {
-          for (i_0_1: int32, 0, 2) "thread_binding" {
+        for (j_0_0_0: int32, 0, 4) "thread_binding" {
+          for (i_0_1: int32, 0, 4) "thread_binding" {
             for (j_0_1: int32, 0, 1) "thread_binding" {
-              for (i_0_2_init: int32, 0, 1) {
-                for (j_0_2_init: int32, 0, 8) {
+              for (i_0_2_init: int32, 0, 2) {
+                for (j_0_2_init: int32, 0, 16) {
                   for (i_1_init: int32, 0, 16) {
                     for (j_1_init: int32, 0, 16) {
-                      block([32, 8192], "B_init") as [vi, vj] {
-                        bind(vi, ((((i_0_0*32) + (i_0_1*16)) + (i_0_2_init*16)) + i_1_init))
-                        bind(vj, (((((j_0_0_0*1024) + (j_0_0_1*128)) + (j_0_1*128)) + (j_0_2_init*16)) + j_1_init))
+                      block([128, 8192], "B_init") as [vi, vj] {
+                        bind(vi, ((((i_0_0*128) + (i_0_1*32)) + (i_0_2_init*16)) + i_1_init))
+                        bind(vj, (((((j_0_0_0*2048) + (j_0_0_1*256)) + (j_0_1*256)) + (j_0_2_init*16)) + j_1_init))
                         tir.reads([])
                         tir.writes([C_wmma.accumulator[vi, vj]])
                         C_wmma.accumulator[vi, vj] = 0f16
@@ -32,47 +32,49 @@
                   }
                 }
               }
-              for (k_0_0: int32, 0, 128) {
-                for (ax0_ax1_fused_0: int32, 0, 2) "thread_binding" {
+              for (k_0_0: int32, 0, 256) {
+                for (ax0_ax1_fused_0: int32, 0, 4) "thread_binding" {
                   for (ax0_ax1_fused_1: int32, 0, 1) "thread_binding" {
                     for (ax0_ax1_fused_2: int32, 0, 4) {
                       for (ax0_ax1_fused_3: int32, 0, 32) "thread_binding" {
                         for (ax0_ax1_fused_4: int32, 0, 8) "vectorized" {
-                          block([32, 8192], "A_shared") as [v0, v1] {
-                            bind(v0, floordiv((((((ax0_ax1_fused_0*1024) + (ax0_ax1_fused_1*1024)) + (ax0_ax1_fused_2*256)) + (ax0_ax1_fused_3*8)) + ax0_ax1_fused_4), 64))
-                            bind(v1, ((k_0_0*64) + floormod((((((ax0_ax1_fused_0*1024) + (ax0_ax1_fused_1*1024)) + (ax0_ax1_fused_2*256)) + (ax0_ax1_fused_3*8)) + ax0_ax1_fused_4), 64)))
+                          block([128, 8192], "A_shared") as [v0, v1] {
+                            bind(v0, floordiv((((((ax0_ax1_fused_0*1024) + (ax0_ax1_fused_1*1024)) + (ax0_ax1_fused_2*256)) + (ax0_ax1_fused_3*8)) + ax0_ax1_fused_4), 32))
+                            bind(v1, ((k_0_0*32) + floormod((((((ax0_ax1_fused_0*1024) + (ax0_ax1_fused_1*1024)) + (ax0_ax1_fused_2*256)) + (ax0_ax1_fused_3*8)) + ax0_ax1_fused_4), 32)))
                             tir.reads([A[v0, v1]])
                             tir.writes([A_shared[v0, v1]])
+                            tir.attrs({"buffer_dim_align": [[0, 0, 32, 8]]})
                             A_shared[v0, v1] = A[v0, v1]
                         }
                       }
                     }
                   }
                 }
-                for (ax0_ax1_fused_0_1: int32, 0, 2) "thread_binding" {
+                for (ax0_ax1_fused_0_1: int32, 0, 4) "thread_binding" {
                   for (ax0_ax1_fused_1_1: int32, 0, 1) "thread_binding" {
-                    for (ax0_ax1_fused_2_1: int32, 0, 16) {
+                    for (ax0_ax1_fused_2_1: int32, 0, 8) {
                       for (ax0_ax1_fused_3_1: int32, 0, 32) "thread_binding" {
                         for (ax0_ax1_fused_4_1: int32, 0, 8) "vectorized" {
                           block([8192, 8192], "B_shared") as [v0_1, v1_1] {
-                            bind(v0_1, (((j_0_0_0*1024) + (j_0_0_1*128)) + floordiv((((((ax0_ax1_fused_0_1*4096) + (ax0_ax1_fused_1_1*4096)) + (ax0_ax1_fused_2_1*256)) + (ax0_ax1_fused_3_1*8)) + ax0_ax1_fused_4_1), 64)))
-                            bind(v1_1, ((k_0_0*64) + floormod((((((ax0_ax1_fused_0_1*4096) + (ax0_ax1_fused_1_1*4096)) + (ax0_ax1_fused_2_1*256)) + (ax0_ax1_fused_3_1*8)) + ax0_ax1_fused_4_1), 64)))
+                            bind(v0_1, (((j_0_0_0*2048) + (j_0_0_1*256)) + floordiv((((((ax0_ax1_fused_0_1*2048) + (ax0_ax1_fused_1_1*2048)) + (ax0_ax1_fused_2_1*256)) + (ax0_ax1_fused_3_1*8)) + ax0_ax1_fused_4_1), 32)))
+                            bind(v1_1, ((k_0_0*32) + floormod((((((ax0_ax1_fused_0_1*2048) + (ax0_ax1_fused_1_1*2048)) + (ax0_ax1_fused_2_1*256)) + (ax0_ax1_fused_3_1*8)) + ax0_ax1_fused_4_1), 32)))
                             tir.reads([B[v0_1, v1_1]])
                             tir.writes([B_shared[v0_1, v1_1]])
+                            tir.attrs({"buffer_dim_align": [[0, 0, 32, 8]]})
                             B_shared[v0_1, v1_1] = B[v0_1, v1_1]
                         }
                       }
                     }
                   }
                 }
-                for (k_0_1: int32, 0, 4) {
-                  for (ax0_0: int32, 0, 1) {
+                for (k_0_1: int32, 0, 2) {
+                  for (ax0_0: int32, 0, 2) {
                     for (ax1_0: int32, 0, 1) {
                       for (ax0_1: int32, 0, 16) {
                         for (ax1_1: int32, 0, 16) {
-                          block([32, 8192], "A_shared_wmma.matrix_a") as [v0_2, v1_2] {
-                            bind(v0_2, (((i_0_1*16) + (ax0_0*16)) + ax0_1))
-                            bind(v1_2, ((((k_0_0*64) + (k_0_1*16)) + (ax1_0*16)) + ax1_1))
+                          block([128, 8192], "A_shared_wmma.matrix_a") as [v0_2, v1_2] {
+                            bind(v0_2, (((i_0_1*32) + (ax0_0*16)) + ax0_1))
+                            bind(v1_2, ((((k_0_0*32) + (k_0_1*16)) + (ax1_0*16)) + ax1_1))
                             tir.reads([A_shared[v0_2, v1_2]])
                             tir.writes([A_shared_wmma.matrix_a[v0_2, v1_2]])
                             A_shared_wmma.matrix_a[v0_2, v1_2] = A_shared[v0_2, v1_2]
@@ -80,13 +82,13 @@
                       }
                     }
                   }
-                  for (ax0_0_1: int32, 0, 8) {
+                  for (ax0_0_1: int32, 0, 16) {
                     for (ax1_0_1: int32, 0, 1) {
                       for (ax0_1_1: int32, 0, 16) {
                         for (ax1_1_1: int32, 0, 16) {
                           block([8192, 8192], "B_shared_wmma.matrix_b") as [v0_3, v1_3] {
-                            bind(v0_3, ((((j_0_0_0*1024) + (j_0_0_1*128)) + (ax0_0_1*16)) + ax0_1_1))
-                            bind(v1_3, ((((k_0_0*64) + (k_0_1*16)) + (ax1_0_1*16)) + ax1_1_1))
+                            bind(v0_3, ((((j_0_0_0*2048) + (j_0_0_1*256)) + (ax0_0_1*16)) + ax0_1_1))
+                            bind(v1_3, ((((k_0_0*32) + (k_0_1*16)) + (ax1_0_1*16)) + ax1_1_1))
                             tir.reads([B_shared[v0_3, v1_3]])
                             tir.writes([B_shared_wmma.matrix_b[v0_3, v1_3]])
                             B_shared_wmma.matrix_b[v0_3, v1_3] = B_shared[v0_3, v1_3]
@@ -94,15 +96,15 @@
                       }
                     }
                   }
-                  for (i_0_2: int32, 0, 1) {
-                    for (j_0_2: int32, 0, 8) {
+                  for (i_0_2: int32, 0, 2) {
+                    for (j_0_2: int32, 0, 16) {
                       for (i_1: int32, 0, 16) {
                         for (j_1: int32, 0, 16) {
                           for (k_1: int32, 0, 16) {
-                            block([32, 8192, tir.reduce_axis(0, 8192)], "B_update") as [vi_1, vj_1, vk] {
-                              bind(vi_1, ((((i_0_0*32) + (i_0_1*16)) + (i_0_2*16)) + i_1))
-                              bind(vj_1, (((((j_0_0_0*1024) + (j_0_0_1*128)) + (j_0_1*128)) + (j_0_2*16)) + j_1))
-                              bind(vk, (((k_0_0*64) + (k_0_1*16)) + k_1))
+                            block([128, 8192, tir.reduce_axis(0, 8192)], "B_update") as [vi_1, vj_1, vk] {
+                              bind(vi_1, ((((i_0_0*128) + (i_0_1*32)) + (i_0_2*16)) + i_1))
+                              bind(vj_1, (((((j_0_0_0*2048) + (j_0_0_1*256)) + (j_0_1*256)) + (j_0_2*16)) + j_1))
+                              bind(vk, (((k_0_0*32) + (k_0_1*16)) + k_1))
                               tir.reads([C_wmma.accumulator[vi_1, vj_1], A_shared_wmma.matrix_a[vi_1, vk], B_shared_wmma.matrix_b[vj_1, vk]])
                               tir.writes([C_wmma.accumulator[vi_1, vj_1]])
                               C_wmma.accumulator[vi_1, vj_1] = (C_wmma.accumulator[vi_1, vj_1] + (A_shared_wmma.matrix_a[vi_1, vk]*B_shared_wmma.matrix_b[vj_1, vk]))
@@ -113,13 +115,13 @@
                   }
                 }
               }
-              for (ax0_0_2: int32, 0, 1) {
-                for (ax1_0_2: int32, 0, 8) {
+              for (ax0_0_2: int32, 0, 2) {
+                for (ax1_0_2: int32, 0, 16) {
                   for (ax0_1_2: int32, 0, 16) {
                     for (ax1_1_2: int32, 0, 16) {
-                      block([32, 8192], "C_wmma.accumulator") as [v0_4, v1_4] {
-                        bind(v0_4, (((i_0_1*16) + (ax0_0_2*16)) + ax0_1_2))
-                        bind(v1_4, ((((j_0_0_0*1024) + (j_0_0_1*128)) + (ax1_0_2*16)) + ax1_1_2))
+                      block([128, 8192], "C_wmma.accumulator") as [v0_4, v1_4] {
+                        bind(v0_4, (((i_0_1*32) + (ax0_0_2*16)) + ax0_1_2))
+                        bind(v1_4, ((((j_0_0_0*2048) + (j_0_0_1*256)) + (ax1_0_2*16)) + ax1_1_2))
                         tir.reads([C_wmma.accumulator[v0_4, v1_4]])
                         tir.writes([C[v0_4, v1_4]])
                         C[v0_4, v1_4] = C_wmma.accumulator[v0_4, v1_4]

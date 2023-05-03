@@ -1,17 +1,17 @@
 #[version = "0.0.5"]
 @main = primfn(a: handle, b: handle, c: handle) -> ()
   attr = {"tir.noalias": True, "global_symbol": "main"}
-  buffers = {A: Buffer(A_1: Pointer(global float16), float16, [32, 8192], []),
+  buffers = {A: Buffer(A_1: Pointer(global float16), float16, [128, 8192], []),
              B: Buffer(B_1: Pointer(global float16), float16, [8192, 8192], []),
-             C: Buffer(C_1: Pointer(global float16), float16, [32, 8192], [])}
+             C: Buffer(C_1: Pointer(global float16), float16, [128, 8192], [])}
   buffer_map = {a: A, b: B, c: C} {
   block([], "root") {
     tir.reads([])
     tir.writes([])
-    for (i: int32, 0, 32) {
+    for (i: int32, 0, 128) {
       for (j: int32, 0, 8192) {
         for (k: int32, 0, 8192) {
-          block([32, 8192, tir.reduce_axis(0, 8192)], "B") as [vi, vj, vk] {
+          block([128, 8192, tir.reduce_axis(0, 8192)], "B") as [vi, vj, vk] {
             bind(vi, i)
             bind(vj, j)
             bind(vk, k)

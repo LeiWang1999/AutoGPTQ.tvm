@@ -3,7 +3,7 @@ from nni.experiment import Experiment
 M = 256
 N = 8192
 K = 8192
-Port = 8094
+Port = 8095
 experiment = Experiment('local')
 experiment.config.experiment_working_directory = './logs/'
 experiment.id = f"M{M}_N{N}_K{K}"

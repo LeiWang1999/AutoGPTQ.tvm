@@ -1,0 +1,96 @@
+Traceback (most recent call last):
+  File "./fp16xfp16_nt_padwmma_template.py", line 127, in <module>
+    block_j, block_k = sch.split(block_j, factors=[None, raster])
+  File "/workspace/v-leiwang3/lowbit_tvm/python/tvm/tir/schedule/_type_checker.py", line 339, in wrap
+    return func(*args, **kwargs)
+  File "/workspace/v-leiwang3/lowbit_tvm/python/tvm/tir/schedule/schedule.py", line 666, in split
+    _ffi_api.ScheduleSplit(  # type: ignore # pylint: disable=no-member
+  File "/workspace/v-leiwang3/lowbit_tvm/python/tvm/_ffi/_ctypes/packed_func.py", line 237, in __call__
+    raise get_last_ffi_error()
+tvm.tir.schedule.schedule.ScheduleError: Traceback (most recent call last):
+  4: TVMFuncCall
+  3: _ZN3tvm7runtime13PackedFuncObj
+  2: tvm::runtime::TypedPackedFunc<tvm::runtime::Array<tvm::tir::LoopRV, void> (tvm::tir::Schedule, tvm::tir::LoopRV const&, tvm::runtime::Array<tvm::runtime::Optional<tvm::PrimExpr>, void> const&, bool)>::AssignTypedLambda<tvm::runtime::Registry::set_body_method<tvm::tir::Schedule, tvm::tir::ScheduleNode, tvm::runtime::Array<tvm::tir::LoopRV, void>, tvm::tir::LoopRV const&, tvm::runtime::Array<tvm::runtime::Optional<tvm::PrimExpr>, void> const&, bool, void>(tvm::runtime::Array<tvm::tir::LoopRV, void> (tvm::tir::ScheduleNode::*)(tvm::tir::LoopRV const&, tvm::runtime::Array<tvm::runtime::Optional<tvm::PrimExpr>, void> const&, bool))::{lambda(tvm::tir::Schedule, tvm::tir::LoopRV const&, tvm::runtime::Array<tvm::runtime::Optional<tvm::PrimExpr>, void> const&, bool)#1}>(tvm::runtime::Registry::set_body_method<tvm::tir::Schedule, tvm::tir::ScheduleNode, tvm::runtime::Array<tvm::tir::LoopRV, void>, tvm::tir::LoopRV const&, tvm::runtime::Array<tvm::runtime::Optional<tvm::PrimExpr>, void> const&, bool, void>(tvm::runtime::Array<tvm::tir::LoopRV, void> (tvm::tir::ScheduleNode::*)(tvm::tir::LoopRV const&, tvm::runtime::Array<tvm::runtime::Optional<tvm::PrimExpr>, void> const&, bool))::{lambda(tvm::tir::Schedule, tvm::tir::LoopRV const&, tvm::runtime::Array<tvm::runtime::Optional<tvm::PrimExpr>, void> const&, bool)#1}, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda(tvm::runtime::TVMArgs const&, tvm::runtime::TVMRetValue*)#1}::operator()(tvm::runtime::TVMArgs const, tvm::runtime::TVMRetValue) const
+  1: tvm::tir::TracedScheduleNode::Split(tvm::tir::LoopRV const&, tvm::runtime::Array<tvm::runtime::Optional<tvm::PrimExpr>, void> const&, bool)
+  0: tvm::tir::ConcreteScheduleNode::Split(tvm::tir::LoopRV const&, tvm::runtime::Array<tvm::runtime::Optional<tvm::PrimExpr>, void> const&, bool) [clone .cold]
+ScheduleError: An error occurred in the schedule primitive 'split'.
+The IR with diagnostic is:
+# from tvm.script import ir as I
+# from tvm.script import tir as T
+
+@I.ir_module
+class Module:
+    @T.prim_func
+    def main(a: T.handle, b: T.handle, c: T.handle):
+        T.func_attr({"global_symbol": "main", "tir.noalias": True})
+        A = T.match_buffer(a, (64, 8192), "float16")
+        B = T.match_buffer(b, (8192, 8192), "float16")
+        C = T.match_buffer(c, (64, 8192), "float16")
+        with T.block("root"):
+            T.reads()
+            T.writes()
+            A_shared = T.alloc_buffer((64, 8192), "float16", scope="shared")
+            A_shared_wmma_matrix_a = T.alloc_buffer((64, 8192), "float16", scope="wmma.matrix_a")
+            B_shared = T.alloc_buffer((8192, 8192), "float16", scope="shared")
+            B_shared_wmma_matrix_b = T.alloc_buffer((8192, 8192), "float16", scope="wmma.matrix_b")
+            C_wmma_accumulator = T.alloc_buffer((64, 8192), "float16", scope="wmma.accumulator")
+            for ax0 in range(8192):
+                for ax1 in range(8192):
+                    with T.block("B_shared"):
+                        v0 = T.axis.spatial(8192, ax0)
+                        v1 = T.axis.spatial(8192, ax1)
+                        T.reads(B[v0, v1])
+                        T.writes(B_shared[v0, v1])
+                        B_shared[v0, v1] = B[v0, v1]
+            for ax0 in range(64):
+                for ax1 in range(8192):
+                    with T.block("A_shared"):
+                        v0 = T.axis.spatial(64, ax0)
+                        v1 = T.axis.spatial(8192, ax1)
+                        T.reads(A[v0, v1])
+                        T.writes(A_shared[v0, v1])
+                        A_shared[v0, v1] = A[v0, v1]
+            for ax0 in range(64):
+                for ax1 in range(8192):
+                    with T.block("A_shared_wmma.matrix_a"):
+                        v0 = T.axis.spatial(64, ax0)
+                        v1 = T.axis.spatial(8192, ax1)
+                        T.reads(A_shared[v0, v1])
+                        T.writes(A_shared_wmma_matrix_a[v0, v1])
+                        A_shared_wmma_matrix_a[v0, v1] = A_shared[v0, v1]
+            for ax0 in range(8192):
+                for ax1 in range(8192):
+                    with T.block("B_shared_wmma.matrix_b"):
+                        v0 = T.axis.spatial(8192, ax0)
+                        v1 = T.axis.spatial(8192, ax1)
+                        T.reads(B_shared[v0, v1])
+                        T.writes(B_shared_wmma_matrix_b[v0, v1])
+                        B_shared_wmma_matrix_b[v0, v1] = B_shared[v0, v1]
+            for i_0_0 in range(1):
+                for i_0_1 in range(1):
+                    for i_0_2 in range(4):
+                        for i_1 in range(16):
+                            for j_0_0 in range(32):
+                                for j_0_1 in range(16):
+                                    for j_0_2 in range(1):
+                                        for j_1 in range(16):
+                                            for k_0 in range(512):
+                                                for k_1 in range(16):
+                                                    with T.block("B"):
+                                                        vi = T.axis.spatial(64, i_0_0 * 64 + i_0_1 * 64 + i_0_2 * 16 + i_1)
+                                                        vj = T.axis.spatial(8192, j_0_0 * 256 + j_0_1 * 16 + j_0_2 * 16 + j_1)
+                                                        vk = T.axis.reduce(8192, k_0 * 16 + k_1)
+                                                        T.reads(A_shared_wmma_matrix_a[vi, vk], B_shared_wmma_matrix_b[vj, vk])
+                                                        T.writes(C_wmma_accumulator[vi, vj])
+                                                        with T.init():
+                                                            C_wmma_accumulator[vi, vj] = T.float16(0)
+                                                        C_wmma_accumulator[vi, vj] = C_wmma_accumulator[vi, vj] + A_shared_wmma_matrix_a[vi, vk] * B_shared_wmma_matrix_b[vj, vk]
+            for ax0 in range(64):
+                for ax1 in range(8192):
+                    with T.block("C_wmma.accumulator"):
+                        v0 = T.axis.spatial(64, ax0)
+                        v1 = T.axis.spatial(8192, ax1)
+                        T.reads(C_wmma_accumulator[v0, v1])
+                        T.writes(C[v0, v1])
+                        C[v0, v1] = C_wmma_accumulator[v0, v1]
+Error message: All the constant factors are required to be positive. However, the factor at position 1 is 0

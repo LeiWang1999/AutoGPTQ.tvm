@@ -1,0 +1,262 @@
+[2023-05-03 06:29:41] DEBUG (asyncio/MainThread) Using selector: EpollSelector
+[2023-05-03 06:29:41] DEBUG (websockets.client/NNI-WebSocketEventLoop) = connection is CONNECTING
+[2023-05-03 06:29:41] DEBUG (websockets.client/NNI-WebSocketEventLoop) > GET /tuner HTTP/1.1
+[2023-05-03 06:29:41] DEBUG (websockets.client/NNI-WebSocketEventLoop) > Host: localhost:8090
+[2023-05-03 06:29:41] DEBUG (websockets.client/NNI-WebSocketEventLoop) > Upgrade: websocket
+[2023-05-03 06:29:41] DEBUG (websockets.client/NNI-WebSocketEventLoop) > Connection: Upgrade
+[2023-05-03 06:29:41] DEBUG (websockets.client/NNI-WebSocketEventLoop) > Sec-WebSocket-Key: Pu77a4BKMoWOk1L4+6QKLw==
+[2023-05-03 06:29:41] DEBUG (websockets.client/NNI-WebSocketEventLoop) > Sec-WebSocket-Version: 13
+[2023-05-03 06:29:41] DEBUG (websockets.client/NNI-WebSocketEventLoop) > Sec-WebSocket-Extensions: permessage-deflate; client_max_window_bits
+[2023-05-03 06:29:41] DEBUG (websockets.client/NNI-WebSocketEventLoop) > User-Agent: Python/3.8 websockets/10.4
+[2023-05-03 06:29:41] DEBUG (websockets.client/NNI-WebSocketEventLoop) < HTTP/1.1 101 Switching Protocols
+[2023-05-03 06:29:41] DEBUG (websockets.client/NNI-WebSocketEventLoop) < Upgrade: websocket
+[2023-05-03 06:29:41] DEBUG (websockets.client/NNI-WebSocketEventLoop) < Connection: Upgrade
+[2023-05-03 06:29:41] DEBUG (websockets.client/NNI-WebSocketEventLoop) < Sec-WebSocket-Accept: I/l9DUNp6v/VKOf1vzuDY64rlRo=
+[2023-05-03 06:29:41] DEBUG (websockets.client/NNI-WebSocketEventLoop) = connection is OPEN
+[2023-05-03 06:29:41] INFO (nni.runtime.msg_dispatcher_base/MainThread) Dispatcher started
+[2023-05-03 06:29:41] DEBUG (websockets.client/NNI-WebSocketEventLoop) < TEXT 'IN{"block_row_warps":{"_type":"choice","_value"...e","_value":[1,2,3,4]}}' [332 bytes]
+[2023-05-03 06:29:41] DEBUG (websockets.client/NNI-WebSocketEventLoop) > TEXT 'ID' [2 bytes]
+[2023-05-03 06:29:41] DEBUG (websockets.client/NNI-WebSocketEventLoop) < TEXT 'GE2' [3 bytes]
+[2023-05-03 06:29:41] DEBUG (websockets.client/NNI-WebSocketEventLoop) > TEXT 'TR{"parameter_id": 0, "parameter_source": "algo..., "parameter_index": 0}' [192 bytes]
+[2023-05-03 06:29:41] DEBUG (websockets.client/NNI-WebSocketEventLoop) > TEXT 'TR{"parameter_id": 1, "parameter_source": "algo..., "parameter_index": 0}' [192 bytes]
+[2023-05-03 06:29:46] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:29:46] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:29:51] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:29:51] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:29:56] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:29:56] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:30:01] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:30:01] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:30:01] DEBUG (websockets.client/NNI-WebSocketEventLoop) % sending keepalive ping
+[2023-05-03 06:30:01] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PING 48 34 5f 9a [binary, 4 bytes]
+[2023-05-03 06:30:01] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PONG 48 34 5f 9a [binary, 4 bytes]
+[2023-05-03 06:30:01] DEBUG (websockets.client/NNI-WebSocketEventLoop) % received keepalive pong
+[2023-05-03 06:30:06] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:30:06] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:30:09] DEBUG (websockets.client/NNI-WebSocketEventLoop) < TEXT 'ME{"parameter_id": 0, "trial_job_id": "z01gl", ..."466.12951633333336"}\n' [110 bytes]
+[2023-05-03 06:30:11] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:30:11] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:30:11] DEBUG (websockets.client/NNI-WebSocketEventLoop) < TEXT 'EN{"trial_job_id":"z01gl","event":"SUCCEEDED","...arameter_index\\": 0}"}' [278 bytes]
+[2023-05-03 06:30:11] DEBUG (websockets.client/NNI-WebSocketEventLoop) < TEXT 'GE1' [3 bytes]
+[2023-05-03 06:30:11] INFO (nni.algorithms.hpo.evolution_tuner/Thread-2) trial (0) end
+[2023-05-03 06:30:11] DEBUG (websockets.client/NNI-WebSocketEventLoop) > TEXT 'TR{"parameter_id": 2, "parameter_source": "algo..., "parameter_index": 0}' [192 bytes]
+[2023-05-03 06:30:16] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:30:16] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:30:21] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:30:21] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:30:21] DEBUG (websockets.client/NNI-WebSocketEventLoop) % sending keepalive ping
+[2023-05-03 06:30:21] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PING 52 59 ac 17 [binary, 4 bytes]
+[2023-05-03 06:30:21] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PONG 52 59 ac 17 [binary, 4 bytes]
+[2023-05-03 06:30:21] DEBUG (websockets.client/NNI-WebSocketEventLoop) % received keepalive pong
+[2023-05-03 06:30:26] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:30:26] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:30:31] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:30:31] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:30:34] DEBUG (websockets.client/NNI-WebSocketEventLoop) < TEXT 'ME{"parameter_id": 1, "trial_job_id": "fn2cp", ...value": "476.977132"}\n' [102 bytes]
+[2023-05-03 06:30:36] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:30:36] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:30:36] DEBUG (websockets.client/NNI-WebSocketEventLoop) < TEXT 'EN{"trial_job_id":"fn2cp","event":"SUCCEEDED","...arameter_index\\": 0}"}' [278 bytes]
+[2023-05-03 06:30:36] DEBUG (websockets.client/NNI-WebSocketEventLoop) < TEXT 'GE1' [3 bytes]
+[2023-05-03 06:30:36] INFO (nni.algorithms.hpo.evolution_tuner/Thread-2) trial (1) end
+[2023-05-03 06:30:36] DEBUG (websockets.client/NNI-WebSocketEventLoop) > TEXT 'TR{"parameter_id": 3, "parameter_source": "algo..., "parameter_index": 0}' [192 bytes]
+[2023-05-03 06:30:41] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:30:41] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:30:41] DEBUG (websockets.client/NNI-WebSocketEventLoop) % sending keepalive ping
+[2023-05-03 06:30:41] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PING 6f 88 75 66 [binary, 4 bytes]
+[2023-05-03 06:30:41] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PONG 6f 88 75 66 [binary, 4 bytes]
+[2023-05-03 06:30:41] DEBUG (websockets.client/NNI-WebSocketEventLoop) % received keepalive pong
+[2023-05-03 06:30:46] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:30:46] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:30:51] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:30:51] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:30:51] DEBUG (websockets.client/NNI-WebSocketEventLoop) < TEXT 'EN{"trial_job_id":"VaBGO","event":"FAILED","hyp...arameter_index\\": 0}"}' [275 bytes]
+[2023-05-03 06:30:51] DEBUG (websockets.client/NNI-WebSocketEventLoop) < TEXT 'GE1' [3 bytes]
+[2023-05-03 06:30:51] INFO (nni.algorithms.hpo.evolution_tuner/Thread-2) trial (2) end
+[2023-05-03 06:30:51] DEBUG (websockets.client/NNI-WebSocketEventLoop) > TEXT 'TR{"parameter_id": 4, "parameter_source": "algo..., "parameter_index": 0}' [192 bytes]
+[2023-05-03 06:30:56] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:30:56] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:31:01] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:31:01] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:31:01] DEBUG (websockets.client/NNI-WebSocketEventLoop) % sending keepalive ping
+[2023-05-03 06:31:01] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PING c9 ea 37 6b [binary, 4 bytes]
+[2023-05-03 06:31:01] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PONG c9 ea 37 6b [binary, 4 bytes]
+[2023-05-03 06:31:01] DEBUG (websockets.client/NNI-WebSocketEventLoop) % received keepalive pong
+[2023-05-03 06:31:06] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:31:06] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:31:11] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:31:11] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:31:16] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:31:16] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:31:21] DEBUG (websockets.client/NNI-WebSocketEventLoop) < TEXT 'ME{"parameter_id": 3, "trial_job_id": "GV4E3", ..."1783.9759113333334"}\n' [110 bytes]
+[2023-05-03 06:31:21] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:31:21] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:31:21] DEBUG (websockets.client/NNI-WebSocketEventLoop) % sending keepalive ping
+[2023-05-03 06:31:21] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PING eb 79 63 a6 [binary, 4 bytes]
+[2023-05-03 06:31:21] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PONG eb 79 63 a6 [binary, 4 bytes]
+[2023-05-03 06:31:21] DEBUG (websockets.client/NNI-WebSocketEventLoop) % received keepalive pong
+[2023-05-03 06:31:22] DEBUG (websockets.client/NNI-WebSocketEventLoop) < TEXT 'EN{"trial_job_id":"GV4E3","event":"SUCCEEDED","...arameter_index\\": 0}"}' [278 bytes]
+[2023-05-03 06:31:22] DEBUG (websockets.client/NNI-WebSocketEventLoop) < TEXT 'GE1' [3 bytes]
+[2023-05-03 06:31:22] INFO (nni.algorithms.hpo.evolution_tuner/Thread-2) trial (3) end
+[2023-05-03 06:31:22] DEBUG (websockets.client/NNI-WebSocketEventLoop) > TEXT 'TR{"parameter_id": 5, "parameter_source": "algo..., "parameter_index": 0}' [192 bytes]
+[2023-05-03 06:31:26] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:31:26] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:31:31] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:31:31] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:31:36] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:31:36] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:31:41] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:31:41] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:31:41] DEBUG (websockets.client/NNI-WebSocketEventLoop) % sending keepalive ping
+[2023-05-03 06:31:41] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PING 9f 80 42 ae [binary, 4 bytes]
+[2023-05-03 06:31:41] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PONG 9f 80 42 ae [binary, 4 bytes]
+[2023-05-03 06:31:41] DEBUG (websockets.client/NNI-WebSocketEventLoop) % received keepalive pong
+[2023-05-03 06:31:44] DEBUG (websockets.client/NNI-WebSocketEventLoop) < TEXT 'ME{"parameter_id": 4, "trial_job_id": "ztJQQ", ... "388.4963783333333"}\n' [109 bytes]
+[2023-05-03 06:31:46] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:31:46] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:31:47] DEBUG (websockets.client/NNI-WebSocketEventLoop) < TEXT 'EN{"trial_job_id":"ztJQQ","event":"SUCCEEDED","...arameter_index\\": 0}"}' [278 bytes]
+[2023-05-03 06:31:47] DEBUG (websockets.client/NNI-WebSocketEventLoop) < TEXT 'GE1' [3 bytes]
+[2023-05-03 06:31:47] INFO (nni.algorithms.hpo.evolution_tuner/Thread-2) trial (4) end
+[2023-05-03 06:31:47] DEBUG (websockets.client/NNI-WebSocketEventLoop) > TEXT 'TR{"parameter_id": 6, "parameter_source": "algo..., "parameter_index": 0}' [191 bytes]
+[2023-05-03 06:31:51] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:31:51] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:31:56] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:31:56] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:31:57] DEBUG (websockets.client/NNI-WebSocketEventLoop) < TEXT 'EN{"trial_job_id":"WFobw","event":"FAILED","hyp...arameter_index\\": 0}"}' [275 bytes]
+[2023-05-03 06:31:57] DEBUG (websockets.client/NNI-WebSocketEventLoop) < TEXT 'GE1' [3 bytes]
+[2023-05-03 06:31:57] INFO (nni.algorithms.hpo.evolution_tuner/Thread-2) trial (5) end
+[2023-05-03 06:31:57] DEBUG (websockets.client/NNI-WebSocketEventLoop) > TEXT 'TR{"parameter_id": 7, "parameter_source": "algo..., "parameter_index": 0}' [193 bytes]
+[2023-05-03 06:32:01] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:32:01] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:32:01] DEBUG (websockets.client/NNI-WebSocketEventLoop) % sending keepalive ping
+[2023-05-03 06:32:01] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PING dd 4b e7 2b [binary, 4 bytes]
+[2023-05-03 06:32:01] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PONG dd 4b e7 2b [binary, 4 bytes]
+[2023-05-03 06:32:01] DEBUG (websockets.client/NNI-WebSocketEventLoop) % received keepalive pong
+[2023-05-03 06:32:06] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:32:06] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:32:07] DEBUG (websockets.client/NNI-WebSocketEventLoop) < TEXT 'EN{"trial_job_id":"EKvzj","event":"FAILED","hyp...arameter_index\\": 0}"}' [274 bytes]
+[2023-05-03 06:32:07] DEBUG (websockets.client/NNI-WebSocketEventLoop) < TEXT 'GE1' [3 bytes]
+[2023-05-03 06:32:07] INFO (nni.algorithms.hpo.evolution_tuner/Thread-2) trial (6) end
+[2023-05-03 06:32:07] DEBUG (websockets.client/NNI-WebSocketEventLoop) > TEXT 'TR{"parameter_id": 8, "parameter_source": "algo..., "parameter_index": 0}' [192 bytes]
+[2023-05-03 06:32:11] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:32:11] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:32:16] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:32:16] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:32:17] DEBUG (websockets.client/NNI-WebSocketEventLoop) < TEXT 'EN{"trial_job_id":"rLRB3","event":"FAILED","hyp...arameter_index\\": 0}"}' [276 bytes]
+[2023-05-03 06:32:17] DEBUG (websockets.client/NNI-WebSocketEventLoop) < TEXT 'GE1' [3 bytes]
+[2023-05-03 06:32:17] INFO (nni.algorithms.hpo.evolution_tuner/Thread-2) trial (7) end
+[2023-05-03 06:32:17] DEBUG (websockets.client/NNI-WebSocketEventLoop) > TEXT 'TR{"parameter_id": 9, "parameter_source": "algo..., "parameter_index": 0}' [192 bytes]
+[2023-05-03 06:32:21] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:32:21] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:32:21] DEBUG (websockets.client/NNI-WebSocketEventLoop) % sending keepalive ping
+[2023-05-03 06:32:21] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PING be 63 22 8f [binary, 4 bytes]
+[2023-05-03 06:32:21] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PONG be 63 22 8f [binary, 4 bytes]
+[2023-05-03 06:32:21] DEBUG (websockets.client/NNI-WebSocketEventLoop) % received keepalive pong
+[2023-05-03 06:32:26] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:32:26] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:32:31] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:32:31] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:32:36] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:32:36] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:32:40] DEBUG (websockets.client/NNI-WebSocketEventLoop) < TEXT 'ME{"parameter_id": 8, "trial_job_id": "sijTU", ... "517.3363850000001"}\n' [109 bytes]
+[2023-05-03 06:32:41] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:32:41] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:32:41] DEBUG (websockets.client/NNI-WebSocketEventLoop) % sending keepalive ping
+[2023-05-03 06:32:41] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PING 28 2e e4 d8 [binary, 4 bytes]
+[2023-05-03 06:32:41] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PONG 28 2e e4 d8 [binary, 4 bytes]
+[2023-05-03 06:32:41] DEBUG (websockets.client/NNI-WebSocketEventLoop) % received keepalive pong
+[2023-05-03 06:32:43] DEBUG (websockets.client/NNI-WebSocketEventLoop) < TEXT 'EN{"trial_job_id":"sijTU","event":"SUCCEEDED","...arameter_index\\": 0}"}' [278 bytes]
+[2023-05-03 06:32:43] DEBUG (websockets.client/NNI-WebSocketEventLoop) < TEXT 'GE1' [3 bytes]
+[2023-05-03 06:32:43] INFO (nni.algorithms.hpo.evolution_tuner/Thread-2) trial (8) end
+[2023-05-03 06:32:43] DEBUG (websockets.client/NNI-WebSocketEventLoop) > TEXT 'TR{"parameter_id": 10, "parameter_source": "alg..., "parameter_index": 0}' [193 bytes]
+[2023-05-03 06:32:46] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:32:46] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:32:51] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:32:51] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:32:53] DEBUG (websockets.client/NNI-WebSocketEventLoop) < TEXT 'EN{"trial_job_id":"ESBDd","event":"FAILED","hyp...arameter_index\\": 0}"}' [275 bytes]
+[2023-05-03 06:32:53] DEBUG (websockets.client/NNI-WebSocketEventLoop) < TEXT 'GE1' [3 bytes]
+[2023-05-03 06:32:53] INFO (nni.algorithms.hpo.evolution_tuner/Thread-2) trial (9) end
+[2023-05-03 06:32:53] DEBUG (websockets.client/NNI-WebSocketEventLoop) > TEXT 'TR{"parameter_id": 11, "parameter_source": "alg..., "parameter_index": 0}' [194 bytes]
+[2023-05-03 06:32:56] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:32:56] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:33:01] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:33:01] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:33:01] DEBUG (websockets.client/NNI-WebSocketEventLoop) % sending keepalive ping
+[2023-05-03 06:33:01] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PING 1e 53 5b f0 [binary, 4 bytes]
+[2023-05-03 06:33:01] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PONG 1e 53 5b f0 [binary, 4 bytes]
+[2023-05-03 06:33:01] DEBUG (websockets.client/NNI-WebSocketEventLoop) % received keepalive pong
+[2023-05-03 06:33:03] DEBUG (websockets.client/NNI-WebSocketEventLoop) < TEXT 'EN{"trial_job_id":"hqDZZ","event":"FAILED","hyp...arameter_index\\": 0}"}' [276 bytes]
+[2023-05-03 06:33:03] DEBUG (websockets.client/NNI-WebSocketEventLoop) < TEXT 'GE1' [3 bytes]
+[2023-05-03 06:33:03] INFO (nni.algorithms.hpo.evolution_tuner/Thread-2) trial (10) end
+[2023-05-03 06:33:03] DEBUG (websockets.client/NNI-WebSocketEventLoop) > TEXT 'TR{"parameter_id": 12, "parameter_source": "alg..., "parameter_index": 0}' [193 bytes]
+[2023-05-03 06:33:06] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:33:06] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:33:11] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:33:11] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:33:16] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:33:16] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:33:21] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:33:21] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:33:21] DEBUG (websockets.client/NNI-WebSocketEventLoop) % sending keepalive ping
+[2023-05-03 06:33:21] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PING af 15 45 fd [binary, 4 bytes]
+[2023-05-03 06:33:21] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PONG af 15 45 fd [binary, 4 bytes]
+[2023-05-03 06:33:21] DEBUG (websockets.client/NNI-WebSocketEventLoop) % received keepalive pong
+[2023-05-03 06:33:24] DEBUG (websockets.client/NNI-WebSocketEventLoop) < TEXT 'ME{"parameter_id": 11, "trial_job_id": "mKpPo",..."420.83190899999994"}\n' [111 bytes]
+[2023-05-03 06:33:26] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:33:26] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:33:28] DEBUG (websockets.client/NNI-WebSocketEventLoop) < TEXT 'EN{"trial_job_id":"mKpPo","event":"SUCCEEDED","...arameter_index\\": 0}"}' [280 bytes]
+[2023-05-03 06:33:28] DEBUG (websockets.client/NNI-WebSocketEventLoop) < TEXT 'GE1' [3 bytes]
+[2023-05-03 06:33:28] INFO (nni.algorithms.hpo.evolution_tuner/Thread-2) trial (11) end
+[2023-05-03 06:33:28] DEBUG (websockets.client/NNI-WebSocketEventLoop) > TEXT 'TR{"parameter_id": 13, "parameter_source": "alg..., "parameter_index": 0}' [195 bytes]
+[2023-05-03 06:33:31] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:33:31] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:33:36] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:33:36] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:33:38] DEBUG (websockets.client/NNI-WebSocketEventLoop) < TEXT 'EN{"trial_job_id":"ABLPk","event":"FAILED","hyp...arameter_index\\": 0}"}' [276 bytes]
+[2023-05-03 06:33:38] DEBUG (websockets.client/NNI-WebSocketEventLoop) < TEXT 'GE1' [3 bytes]
+[2023-05-03 06:33:38] INFO (nni.algorithms.hpo.evolution_tuner/Thread-2) trial (12) end
+[2023-05-03 06:33:38] DEBUG (websockets.client/NNI-WebSocketEventLoop) > TEXT 'TR{"parameter_id": 14, "parameter_source": "alg..., "parameter_index": 0}' [193 bytes]
+[2023-05-03 06:33:41] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:33:41] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:33:41] DEBUG (websockets.client/NNI-WebSocketEventLoop) % sending keepalive ping
+[2023-05-03 06:33:41] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PING 6b 8a e1 57 [binary, 4 bytes]
+[2023-05-03 06:33:41] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PONG 6b 8a e1 57 [binary, 4 bytes]
+[2023-05-03 06:33:41] DEBUG (websockets.client/NNI-WebSocketEventLoop) % received keepalive pong
+[2023-05-03 06:33:46] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:33:46] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:33:49] DEBUG (websockets.client/NNI-WebSocketEventLoop) < TEXT 'EN{"trial_job_id":"LkAVN","event":"FAILED","hyp...arameter_index\\": 0}"}' [278 bytes]
+[2023-05-03 06:33:49] DEBUG (websockets.client/NNI-WebSocketEventLoop) < TEXT 'GE1' [3 bytes]
+[2023-05-03 06:33:49] INFO (nni.algorithms.hpo.evolution_tuner/Thread-2) trial (13) end
+[2023-05-03 06:33:49] DEBUG (websockets.client/NNI-WebSocketEventLoop) > TEXT 'TR{"parameter_id": 15, "parameter_source": "alg..., "parameter_index": 0}' [193 bytes]
+[2023-05-03 06:33:51] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:33:51] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:33:56] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:33:56] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:33:59] DEBUG (websockets.client/NNI-WebSocketEventLoop) < TEXT 'EN{"trial_job_id":"RpGYv","event":"FAILED","hyp...arameter_index\\": 0}"}' [276 bytes]
+[2023-05-03 06:33:59] DEBUG (websockets.client/NNI-WebSocketEventLoop) < TEXT 'GE1' [3 bytes]
+[2023-05-03 06:33:59] INFO (nni.algorithms.hpo.evolution_tuner/Thread-2) trial (14) end
+[2023-05-03 06:33:59] DEBUG (websockets.client/NNI-WebSocketEventLoop) > TEXT 'TR{"parameter_id": 16, "parameter_source": "alg..., "parameter_index": 0}' [193 bytes]
+[2023-05-03 06:34:01] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:34:01] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:34:01] DEBUG (websockets.client/NNI-WebSocketEventLoop) % sending keepalive ping
+[2023-05-03 06:34:01] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PING 'Ʋ\x0bX' [text, 4 bytes]
+[2023-05-03 06:34:01] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PONG 'Ʋ\x0bX' [text, 4 bytes]
+[2023-05-03 06:34:01] DEBUG (websockets.client/NNI-WebSocketEventLoop) % received keepalive pong
+[2023-05-03 06:34:06] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:34:06] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:34:11] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:34:11] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:34:16] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:34:16] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:34:21] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PING '' [0 bytes]
+[2023-05-03 06:34:21] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PONG '' [0 bytes]
+[2023-05-03 06:34:21] DEBUG (websockets.client/NNI-WebSocketEventLoop) % sending keepalive ping
+[2023-05-03 06:34:21] DEBUG (websockets.client/NNI-WebSocketEventLoop) > PING 6d 23 f5 10 [binary, 4 bytes]
+[2023-05-03 06:34:21] DEBUG (websockets.client/NNI-WebSocketEventLoop) < PONG 6d 23 f5 10 [binary, 4 bytes]
+[2023-05-03 06:34:21] DEBUG (websockets.client/NNI-WebSocketEventLoop) % received keepalive pong
+[2023-05-03 06:34:25] DEBUG (websockets.client/NNI-WebSocketEventLoop) < TEXT 'TE' [2 bytes]
+[2023-05-03 06:34:25] INFO (nni.runtime.msg_dispatcher_base/MainThread) Dispatcher exiting...
+[2023-05-03 06:34:26] DEBUG (websockets.client/NNI-WebSocketEventLoop) = connection is CLOSING
+[2023-05-03 06:34:26] DEBUG (websockets.client/NNI-WebSocketEventLoop) > CLOSE 1000 (OK) [2 bytes]
+[2023-05-03 06:34:26] DEBUG (websockets.client/NNI-WebSocketEventLoop) < CLOSE 1000 (OK) [2 bytes]
+[2023-05-03 06:34:26] DEBUG (websockets.client/NNI-WebSocketEventLoop) = connection is CLOSED
+[2023-05-03 06:34:26] INFO (nni.runtime.msg_dispatcher_base/MainThread) Dispatcher terminiated
