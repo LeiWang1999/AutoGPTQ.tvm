@@ -6,7 +6,7 @@ from auto_gptq import AutoGPTQForCausalLM, BaseQuantizeConfig
 
 
 pretrained_model_dir = "facebook/opt-66b"
-quantized_model_dir = "opt-66b-3bit"
+quantized_model_dir = "quantization/models/opt-66b-3bit"
 
 
 tokenizer = AutoTokenizer.from_pretrained(pretrained_model_dir, use_fast=True)
@@ -39,3 +39,8 @@ model = AutoGPTQForCausalLM.from_quantized(quantized_model_dir, device="cuda:0",
 # or you can also use pipeline
 pipeline = TextGenerationPipeline(model=model, tokenizer=tokenizer)
 print(pipeline("auto-gptq is")[0]["generated_text"])
+
+
+'''
+output is: auto-gptq is auto-gptq is a easy way to use tool command freeto use, easy to use
+'''
