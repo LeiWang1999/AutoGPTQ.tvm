@@ -13,7 +13,7 @@ search_space = {
     "BM": {"_type": "choice", "_value": [16]},
     "BN": {"_type": "choice", "_value": [64, 128, 256]},
     "BK": {"_type": "choice", "_value": [16, 32, 64]},
-    "raster": {"_type": "choice", "_value": [0, 8, 16]},
+    "raster": {"_type": "choice", "_value": [0, 1, 8, 16]},
     "stage": {"_type": "choice", "_value": [1, 2, 3]},
 }
 experiment.config.search_space = search_space

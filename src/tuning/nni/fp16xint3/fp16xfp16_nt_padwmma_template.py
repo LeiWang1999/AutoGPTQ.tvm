@@ -122,18 +122,25 @@ j, kernel_j = sch.split(j, factors=[None, wmma_n])
 k, kernel_k = sch.split(k, factors=[None, wmma_k])
 block_i, i, ii = sch.split(i, factors=[None, block_row_warps, warp_row_tiles])
 block_j, j, jj = sch.split(j, factors=[None, block_col_warps, warp_col_tiles])
+
 if raster > 0:
     block_j, block_k = sch.split(block_j, factors=[None, raster])
-ko, ki = sch.split(k, factors=[None, chunk])
-sch.reorder(block_k, block_i, block_j, i, j, ko, ki, ii, jj, kernel_i, kernel_j, kernel_k)
+    ko, ki = sch.split(k, factors=[None, chunk])
+    sch.reorder(block_k, block_i, block_j, i, j, ko, ki, ii, jj, kernel_i, kernel_j, kernel_k)
+    sch.bind(block_k, "blockIdx.z")
+    sch.bind(block_i, "blockIdx.y")
+    sch.bind(block_j, "blockIdx.x")
+    sch.bind(i, "threadIdx.y")
+    sch.bind(j, "threadIdx.z")
+else:
+    ko, ki = sch.split(k, factors=[None, chunk])
+    sch.reorder(block_i, block_j, i, j, ko, ki, ii, jj, kernel_i, kernel_j, kernel_k)
+    sch.bind(block_i, "blockIdx.y")
+    sch.bind(block_j, "blockIdx.x")
+    sch.bind(i, "threadIdx.y")
+    sch.bind(j, "threadIdx.z")
 
 write_sch(sch, log_path, "block_tile")
-if raster > 0:
-    sch.bind(block_k, "blockIdx.z")
-sch.bind(block_i, "blockIdx.y")
-sch.bind(block_j, "blockIdx.x")
-sch.bind(i, "threadIdx.y")
-sch.bind(j, "threadIdx.z")
 
 write_sch(sch, log_path, "thread_bind")
 
