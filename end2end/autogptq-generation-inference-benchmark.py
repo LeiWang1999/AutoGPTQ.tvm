@@ -3,7 +3,11 @@ import time
 import torch
 import torch.nn as nn
 
-from quantization.gptq import *
+import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+from transformers import AutoTokenizer, TextGenerationPipeline
+from auto_gptq import AutoGPTQForCausalLM, BaseQuantizeConfig
 
 DEV = 'cuda'
 
@@ -19,21 +23,11 @@ def get_opt(model):
     model.seqlen = model.config.max_position_embeddings
     return model
 
-def benchmark(model, input_ids, check=False):
-    input_ids = input_ids.to(model.gpus[0] if hasattr(model, 'gpus') else DEV)
+def benchmark(model, inputs):
     torch.cuda.synchronize()
-
-    cache = {'past': None}
-    def clear_past(i):
-        def tmp(layer, inp, out):
-            if cache['past']:
-                cache['past'][i] = None
-        return tmp
-    for i, layer in enumerate(model.model.decoder.layers):
-        layer.register_forward_hook(clear_past(i))
-
     print('Benchmarking ...')
-    iterations = 100
+    print("Input is ", inputs)
+    iterations = 10
     def sync():
         if hasattr(model, 'gpus'):
             for gpu in model.gpus:
@@ -44,25 +38,26 @@ def benchmark(model, input_ids, check=False):
         times = []
         for i in range(iterations):
             tick = time.time()
-            out = model(
-                input_ids
-            )
+            out = model.generate(**inputs)
             sync()
             times.append(time.time() - tick)
             print(i, times[-1])
         sync()
         import numpy as np
         print('Median:', np.median(times) * 1000, 'ms')
-        print("Output is ", out.logits)
+        print("Output is ", out)
 
 
 import argparse
 
-model = "/workspace/v-leiwang3/lowbit_model/opt_3bit_first_layer/checkpoint"
-model = get_opt(model)
+pretrained_model_dir = "facebook/opt-66b"
+quantized_model_dir = "quantization/models/opt-66b-3bit"
+model = AutoGPTQForCausalLM.from_quantized(quantized_model_dir, device="cuda:0", use_tvm=True)
+
 model.eval()
 model = model.cuda()
- 
+tokenizer = AutoTokenizer.from_pretrained(pretrained_model_dir, use_fast=True)
 # fill input_ids with random data
-input_ids = torch.ones((1, 1), dtype=torch.int64, device="cuda")
-benchmark(model, input_ids, check=False)
+inputs = tokenizer("auto_gptq is an interesting", return_tensors="pt").to(model.device)
+print(inputs)
+benchmark(model, inputs)
