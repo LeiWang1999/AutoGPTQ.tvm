@@ -13,6 +13,8 @@
 # remove all sub logs dir
 **/logs/**
 
+**/progress/**
+
 /.vscode/*
 
 /__pycache__/*
@@ -20,3 +22,4 @@
 /.hypothesis/*
 
 /.pkl_memoize_py3/*
+
