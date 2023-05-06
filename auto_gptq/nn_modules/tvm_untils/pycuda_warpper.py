@@ -98,7 +98,7 @@ class TVMHandler(object):
                 "stage": 1
             }
         }
-        self.m1: TVMExecutable = self._get_executable_m1(bits, k)
+        self.m1: TVMExecutable = self._get_executable_m1(bits, n, k)
         self.m16: TVMExecutable = self._get_executable_mx(bits, n, k, 'm16')
         self.m32: TVMExecutable = self._get_executable_mx(bits, n, k, 'm32')
         self.m64: TVMExecutable = self._get_executable_mx(bits, n, k, 'm64')
@@ -106,12 +106,15 @@ class TVMHandler(object):
         self.m256: TVMExecutable = self._get_executable_mx(bits, n, k, 'm256')
     
     def __call__(self, input, qweight, output, scales, zeros) -> Any:
-        assert len(output.shape) == 2, "output should be 2D"
-        M = output.shape[0]
-        N = output.shape[1]
+        assert len(output.shape) >= 2, "output should be larger than 2D"
+        M = 1
+        for i in range(len(output.shape) - 1):
+            M *= output.shape[i]
+        N = output.shape[-1]
         if M == 1:
-            block = (32, self.configurations['m1']['num_warps'], 1)
-            grid = (N // self.configurations['m1']['num_warps'], 1, 1)
+            m1_config = self.configurations['m1']
+            block = (32, m1_config['num_warps'], 1)
+            grid = (N // m1_config['num_warps'], 1, 1)
             self.m1(input, qweight, output, scales, zeros, block=block, grid=grid)
         elif M == 16:
             mx_config = self.configurations['m16']
@@ -140,9 +143,9 @@ class TVMHandler(object):
             self.m256(input, qweight, output, scales, zeros, block=block, grid=grid)
 
     
-    def _get_executable_m1(self, bits:int, k:int):
+    def _get_executable_m1(self, bits:int, n:int, k:int):
         # get src code
-        m1_module = get_gemv_workloads(bits, k)
+        m1_module = get_gemv_workloads(bits, n, k)
         num_warps = self.configurations['m1']['num_warps']
         m1_mod = self._apply_gemv_schedule(m1_module, bits, k, num_warps)
         code = m1_mod.imported_modules[0].get_source()
@@ -402,14 +405,10 @@ def bit_compress(x, bits, axis):
             _compressed[..., i // (8 // bits)] |= (val <<
                                                 ((i % (8 // bits)) * bits)).astype("int8")
         return _compressed
-        
-if __name__ == '__main__':
-    # test for 3x3 kernel
-    M = 16
-    N = 1024
-    K = 768
+
+def gemv_test(M, N, K):
     handler = TVMHandler(bits=3, n=N, k=K)
-    x = torch.ones((M, K), dtype=torch.float16).cuda()
+    x = torch.rand((M, K), dtype=torch.float16).cuda()
     w = (np.arange(N * K) % 4).reshape((N, K)).astype("int8")
     qw = bit_compress(w, 3, 1)
     print(np.matmul(x.cpu().numpy(), w.T))
@@ -419,6 +418,30 @@ if __name__ == '__main__':
     zeros = torch.zeros(N, dtype=torch.float16).cuda()
     y = torch.zeros((M, N), dtype=torch.float16).cuda()
     handler(x, qw, y, scales, zeros)
-    print(y)
+    print(y.cpu().numpy())
+    return y 
+    ...
+if __name__ == '__main__':
+    # test for gemv kernel
+    M = 1
+    N = 1024
+    K = 768
+    gemv_test(M, N, K)
+    # test for 3x3 kernel
+    # M = 16
+    # N = 1024
+    # K = 768
+    # handler = TVMHandler(bits=3, n=N, k=K)
+    # x = torch.ones((M, K), dtype=torch.float16).cuda()
+    # w = (np.arange(N * K) % 4).reshape((N, K)).astype("int8")
+    # qw = bit_compress(w, 3, 1)
+    # print(np.matmul(x.cpu().numpy(), w.T))
+    # w = torch.from_numpy(w).cuda()
+    # qw = torch.from_numpy(qw).cuda()
+    # scales = torch.ones(N, dtype=torch.float16).cuda()
+    # zeros = torch.zeros(N, dtype=torch.float16).cuda()
+    # y = torch.zeros((M, N), dtype=torch.float16).cuda()
+    # handler(x, qw, y, scales, zeros)
+    # print(y)
     
     

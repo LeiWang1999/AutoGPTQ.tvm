@@ -46,11 +46,11 @@ def get_gemm_workloads(bits, N, K):
                         B_rescale[vj, vk].astype("float16")
     return MyModule
 
-def get_gemv_workloads(bits, K):
+def get_gemv_workloads(bits, N, K):
     
     group_stride = 32 * bits // 8
     M = 1
-    N = 9216
+    N = N
     K = K
     mask = (1 << bits) - 1
     vec = 8 if bits == 3 else 8

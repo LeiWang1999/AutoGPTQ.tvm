@@ -202,7 +202,8 @@ class QuantLinear(nn.Module):
         
 
     def forward(self, x):
-        print('QuantLinear forward, xshape is ', x.shape)
+        # print('QuantLinear forward, xshape is ', x.shape)
+        # print(x)
         dtype = x.dtype
         x = x.half()
         M = 1
@@ -211,10 +212,11 @@ class QuantLinear(nn.Module):
         if x.shape[-1] == x.numel():
             outshape = list(x.shape)
             outshape[-1] = self.bias.numel()
-            y = torch.zeros(outshape, dtype=dtype, device=x.device)
+            y = torch.zeros(outshape, dtype=x.dtype, device=x.device)
             self.tvm_handler(x, self.qweight, y, self.scales, self.zeros)
             y = y.reshape(outshape)
             y += self.bias
+            # print(y)
             return y 
         elif 1 < M <= 16:
             outshape = list(x.shape)
@@ -261,7 +263,7 @@ class QuantLinear(nn.Module):
         y[:M] = y_pad[:M]
         y += self.bias
         y.to(dtype)
-        print(y)
+        # print(y)
         return y
 
         
