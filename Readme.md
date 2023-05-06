@@ -1,4 +1,4 @@
-**Notes: sorry that source of the AutoGPTQ.tvm repo is gonna be temporarily down cause there might be some overlap with what I’m working on at msft research. a code review must need to be done before it goes public :). If you’ve got any questions, feel free to reach out to me.**
+**Notes: sorry that source of the AutoGPTQ.tvm repo is gonna be temporarily down cause there might be some overlap with what I’m working on at msft research. a code review must need to be done before it goes public :). If you’ve got any questions, feel free to reach out to [me](leiwang1999@outlook.com).**
 
 # AutoGPTQ.tvm
 
