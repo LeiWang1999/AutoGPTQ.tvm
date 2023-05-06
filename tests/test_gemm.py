@@ -11,9 +11,7 @@ torch.backends.cuda.matmul.allow_tf32 = False
 torch.backends.cudnn.allow_tf32 = False
 
 print('Benchmarking OPT-175B FC2 matvec ...')
-
 DEV = torch.device('cuda:0')
-
 torch.manual_seed(0)
 
 configs = [
