@@ -3,3 +3,20 @@
 /quantization/models/*
 
 !/quantization/models/.gitkeep
+
+*.log
+
+*.egg-info
+
+/build/*
+
+# remove all sub logs dir
+**/logs/**
+
+/.vscode/*
+
+/__pycache__/*
+
+/.hypothesis/*
+
+/.pkl_memoize_py3/*

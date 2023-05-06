@@ -1,3 +1,0 @@
-[09:20:44] /workspace/v-leiwang3/lowbit_tvm/src/target/source/codegen_cuda.cc:1077: wait_cnt: 2
-[09:20:44] /workspace/v-leiwang3/lowbit_tvm/src/target/source/codegen_cuda.cc:1077: wait_cnt: 1
-[09:20:44] /workspace/v-leiwang3/lowbit_tvm/src/target/source/codegen_cuda.cc:1077: wait_cnt: 0
