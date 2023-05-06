@@ -1,6 +1,6 @@
 # GPTQ-tvm
 
-This is a toy project to implement GPTQ Kernel with TVM, which supports diverse lowbit int de-compress in kernel tuning and trikcy support for dynamic shape.
+This is a toy project to implement GPTQ Kernel with TVM, which supports diverse lowbit dtypes in kernel de-compression tuning and trikcy support for dynamic shape.
 
 we also interagte this codegen stage into auto-gptq, which is an easy-to-use pakage for GPTQ.
 
