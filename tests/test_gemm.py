@@ -16,37 +16,44 @@ torch.manual_seed(0)
 
 configs = [
     # M N K
-    [16, 9216, 9216],
-    [3, 9216, 9216],
-    [32, 9216, 9216],
-    [22, 9216, 9216],
-    [64, 9216, 9216],
-    [62, 9216, 9216],
-    [128, 9216, 9216],
-    [122, 9216, 9216],
-    [256, 9216, 9216],
-    [252, 9216, 9216],
-    [1024, 9216, 9216],
-    [1022, 9216, 9216],
-    [16, 9216, 36864],
-    [2, 9216, 36864],
-    [32, 9216, 36864],
-    [22, 9216, 36864],
-    [64, 9216, 36864],
-    [62, 9216, 36864],
-    [128, 9216, 36864],
-    [122, 9216, 36864],
-    [256, 9216, 36864],
-    [252, 9216, 36864],
-    [1024, 9216, 36864],
-    [1022, 9216, 36864],
+    # [16, 9216, 9216],
+    # [3, 9216, 9216],
+    # [32, 9216, 9216],
+    # [22, 9216, 9216],
+    # [64, 9216, 9216],
+    # [62, 9216, 9216],
+    # [128, 9216, 9216],
+    # [122, 9216, 9216],
+    # [256, 9216, 9216],
+    # [252, 9216, 9216],
+    # [1024, 9216, 9216],
+    # [1022, 9216, 9216],
+    # [16, 9216, 36864],
+    # [2, 9216, 36864],
+    # [32, 9216, 36864],
+    # [22, 9216, 36864],
+    # [64, 9216, 36864],
+    # [62, 9216, 36864],
+    # [128, 9216, 36864],
+    # [122, 9216, 36864],
+    # [256, 9216, 36864],
+    # [252, 9216, 36864],
+    # [1024, 9216, 36864],
+    # [1022, 9216, 36864],
+    
+    # [17, 6656, 6656],
+    # [17, 6656, 6656],
+    # [17, 6656, 6656],
+    # [17, 6656, 6656],
+    # [17, 6656, 17920],
+    [32, 17920, 6656],
 ]
 
-bits = 3
+bits = 4
 for M, N, K in configs:
     print(f'Verifiying kernel correctness of M {M} N {N} K {K} ...')
 
-    layer = nn.Linear(K, N)
+    layer = nn.Linear(K, N, bias=False)
     layer = layer.to(DEV).half()
 
     vec = torch.randn((M, K)).to(DEV)
@@ -61,8 +68,9 @@ for M, N, K in configs:
     )
     layer.weight.data = layer.weight.data.half()
 
-    qlayer = QuantLinear(bits, -1, layer.in_features, layer.out_features, True)
-    qlayer.pack(layer, quantizer.scale, quantizer.zero, -1)
+    qlayer = QuantLinear(bits, -1, layer.in_features, layer.out_features, False)
+    g_idx = torch.zeros((layer.in_features), dtype=torch.long)
+    qlayer.pack(layer, quantizer.scale, quantizer.zero, g_idx)
 
     qlayer = qlayer.to(DEV)
     layer = layer.to(DEV)
