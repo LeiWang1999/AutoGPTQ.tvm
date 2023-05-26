@@ -3,8 +3,7 @@ import time
 import torch
 import torch.nn as nn
 
-from quantization.gptq import *
-from transformers import AutoTokenizer, TextGenerationPipeline
+from transformers import AutoTokenizer, TextGenerationPipeline, AutoModelForCausalLM
 
 DEV = 'cuda'
 
@@ -25,6 +24,7 @@ def benchmark(model, inputs):
     print('Benchmarking ...')
     print("Input is ", inputs)
     iterations = 10
+    pipeline = TextGenerationPipeline(model=model, tokenizer=tokenizer)
     def sync():
         if hasattr(model, 'gpus'):
             for gpu in model.gpus:
@@ -35,7 +35,7 @@ def benchmark(model, inputs):
         times = []
         for i in range(iterations):
             tick = time.time()
-            out = model.generate(**inputs)
+            out = pipeline(inputs)
             sync()
             times.append(time.time() - tick)
             print(i, times[-1])
@@ -47,13 +47,16 @@ def benchmark(model, inputs):
 
 import argparse
 
-model = "facebook/opt-6b"
-model = get_opt(model)
-model.eval()
-model = model.cuda()
- 
+# model = "facebook/opt-66b"
+# model = get_opt(model)
+# model.eval()
+# model = model.cuda()
+pretrained_model_dir = "/workspace/v-leiwang3/lowbit_model/oa_llama_30b/oasst-sft-6-llama-30b"
+
+model = AutoModelForCausalLM.from_pretrained(pretrained_model_dir, torch_dtype='auto')
 # fill input_ids with random data
-tokenizer = AutoTokenizer.from_pretrained(model, use_fast=True)
+tokenizer = AutoTokenizer.from_pretrained(pretrained_model_dir, use_fast=True)
 # fill input_ids with random data
-inputs = tokenizer("auto_gptq is an interesting", return_tensors="pt").to(model.device)
-benchmark(model, inputs, check=False)
+# inputs = tokenizer("auto_gptq is an interesting", return_tensors="pt").to(model.device)
+inputs = "auto_gptq is an interesting"
+benchmark(model, inputs)

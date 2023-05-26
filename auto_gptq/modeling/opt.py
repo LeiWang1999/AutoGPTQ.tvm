@@ -9,7 +9,7 @@ class OPTGPTQForCausalLM(BaseGPTQForCausalLM):
         "model.decoder.project_in", "model.decoder.final_layer_norm"
     ]
     inside_layer_modules = [
-        ["self_attn.k_proj", "self_attn.v_proj", "self_attn.q_proj"],
+        ["self_attn.q_proj", "self_attn.k_proj", "self_attn.v_proj"],
         ["self_attn.out_proj"],
         ["fc1"],
         ["fc2"]

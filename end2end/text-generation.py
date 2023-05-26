@@ -1,12 +1,20 @@
 import os
 import sys
-sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))  
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
 from transformers import AutoTokenizer, TextGenerationPipeline
 from auto_gptq import AutoGPTQForCausalLM, BaseQuantizeConfig
 
 
-pretrained_model_dir = "facebook/opt-66b"
-quantized_model_dir = "quantization/models/opt-66b-3bit"
+# pretrained_model_dir = "facebook/opt-125m"
+# quantized_model_dir = "quantization/models/opt-125m-3bit"
+
+# pretrained_model_dir = "/workspace/v-leiwang3/lowbit_model/opt_3bit_first_layer/checkpoint/"
+# quantized_model_dir = "quantization/models/opt-66b-1layer-3bit"
+
+
+pretrained_model_dir = "/workspace/v-leiwang3/lowbit_model/oa_llama_30b/oasst-sft-6-llama-30b"
+quantized_model_dir = "quantization/models/huggingchat-30b-4bit"
 
 enable_quantize = False
 
@@ -40,7 +48,7 @@ model = AutoGPTQForCausalLM.from_quantized(quantized_model_dir, device="cuda:0",
 
 # or you can also use pipeline
 pipeline = TextGenerationPipeline(model=model, tokenizer=tokenizer)
-print(pipeline("auto-gptq is")[0]["generated_text"])
+print(pipeline("auto_gptq is an interesting")[0]["generated_text"])
 
 
 '''
