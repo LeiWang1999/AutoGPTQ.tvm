@@ -1,12 +1,13 @@
 import os
 import sys
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 from transformers import AutoTokenizer, TextGenerationPipeline
 from auto_gptq import AutoGPTQForCausalLM, BaseQuantizeConfig
 
 
-pretrained_model_dir = "facebook/opt-125m"
-quantized_model_dir = "quantization/models/opt-125m-3bit"
+pretrained_model_dir = "/workspace/v-leiwang3/lowbit_model/oa_llama_30b/oasst-sft-6-llama-30b"
+quantized_model_dir = "quantization/models/huggingchat-30b-4bit"
 
 
 tokenizer = AutoTokenizer.from_pretrained(pretrained_model_dir, use_fast=True)
@@ -17,7 +18,7 @@ examples = [
 ]
 
 quantize_config = BaseQuantizeConfig(
-    bits=3,  # quantize model to 3-bit
+    bits=4,  # quantize model to 3-bit
     # desc_act=False,  # disable activation description
     # group_size=128,  # disable group quantization
     desc_act=True
