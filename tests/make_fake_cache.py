@@ -4,12 +4,17 @@ sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 from auto_gptq.nn_modules.tvm_untils import workloads, pycuda_warpper
 
 # get shapes from models
-bits = 3
+bits = 4
 shapes = [
     # N K
-    (3072, 768),
-    (768, 3072),
-    (768, 768),
+    # (3072, 768),
+    # (768, 3072),
+    # (768, 768),
+    (43008, 14336),
+    (14336, 14336),
+    (57344, 14336),
+    (14336, 57344),
+
 ]
 
 configurations = {
@@ -88,8 +93,8 @@ for n, k in shapes:
         else:
             mx = f'm{m}'
             mx_config = configurations[mx]
-            mx_mod = workloads._apply_dynamic_gemm_schedule(bits, m, n, k, mx_config)
-            name = f"tir_halfxint3_tensorop_{mx_config['BM']}x{mx_config['BN']}x{mx_config['BK']}x{mx_config['stage']}_t{mx_config['raster']}_y{mx_config['block_row_warps']}z{mx_config['block_col_warps']}_K{k}_align8"
+            mx_mod = workloads._apply_dynamic_gemm_schedule(bits, m, n, k, -1, mx_config)
+            name = f"tir_halfxint4_tensorop_{mx_config['BM']}x{mx_config['BN']}x{mx_config['BK']}x{mx_config['stage']}_t{mx_config['raster']}_y{mx_config['block_row_warps']}z{mx_config['block_col_warps']}_K{k}_align8"
             code = mx_mod.imported_modules[0].get_source()
             code = code.replace(
                 "main_kernel0", name)
@@ -110,7 +115,7 @@ for n, k in shapes:
         handler_database[key][mx]['code'] = code
         handler_database[key][mx]['func_name'] = name
 
-# print(handler_database)
-# with open('./.cache/handler_database.json', 'w') as f:
-#     import json
-#     json.dump(handler_database, f, indent=4)
+print(handler_database)
+with open('./.cache/bloom.json', 'w') as f:
+    import json
+    json.dump(handler_database, f, indent=4)
