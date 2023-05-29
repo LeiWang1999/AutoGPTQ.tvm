@@ -36,6 +36,19 @@ class NNIDatabase(object):
             print("No metric data records found.")
         return best_params
     
+    def get_best_latency(self):
+        self.cursor.execute("SELECT * FROM MetricData")
+        all_data_record = self.cursor.fetchall()
+
+        # find the minimum data record (sort by the last column)
+        all_data_record.sort(key=lambda x: float(x[-1].replace('"', '')))
+        lowest_metric_data_record = all_data_record[0]
+
+        if not lowest_metric_data_record:
+            print("No metric data records found.")
+
+        return lowest_metric_data_record
+    
     def close(self):
         self.conn.close()
 
