@@ -142,6 +142,7 @@ class BaseGPTQForCausalLM(nn.Module, PushToHubMixin):
         batch_size: int = 1,
         use_triton: bool = False,
         use_tvm: bool = False,
+        export_nnfusion: bool = False,
         autotune_warmup_after_quantized: bool = False,
         cache_examples_on_gpu: bool = True
     ):
@@ -345,6 +346,7 @@ class BaseGPTQForCausalLM(nn.Module, PushToHubMixin):
             group_size=self.quantize_config.group_size,
             use_triton=use_triton,
             use_tvm=use_tvm,
+            export_nnfusion=export_nnfusion,
             autotune_warmup=autotune_warmup_after_quantized,
             force_layer_back_to_cpu=force_layer_back_to_cpu
         )
@@ -364,8 +366,8 @@ class BaseGPTQForCausalLM(nn.Module, PushToHubMixin):
     def to(self, device: Union[str, torch.device]):
         return self.model.to(device)
 
-    def forward(self, **kwargs):
-        return self.model(**kwargs)
+    def forward(self, *input, **kwargs):
+        return self.model(*input, **kwargs)
 
     def generate(self, **kwargs):
         """shortcut for model.generate"""
@@ -482,6 +484,7 @@ class BaseGPTQForCausalLM(nn.Module, PushToHubMixin):
         use_safetensors: bool = False,
         use_triton: bool = False,
         use_tvm: bool = False,
+        export_nnfusion: bool = False,
         max_memory: Optional[dict] = None,
         device_map: Optional[str] = None,
         quantize_config: Optional[BaseQuantizeConfig] = None,
@@ -535,7 +538,7 @@ class BaseGPTQForCausalLM(nn.Module, PushToHubMixin):
                 del layers[name]
 
         with accelerate.init_empty_weights():
-            make_quant(model, layers, quantize_config.bits, quantize_config.group_size, use_triton=use_triton, use_tvm=use_tvm)
+            make_quant(model, layers, quantize_config.bits, quantize_config.group_size, use_triton=use_triton, use_tvm=use_tvm, export_nnfusion=export_nnfusion)
         model.tie_weights()
 
         if max_memory and not device_map:

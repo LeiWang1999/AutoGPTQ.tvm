@@ -388,6 +388,7 @@ def _apply_dynamic_gemm_schedule(bits, M, N, K, group_size, config):
                     C[vi, vj] = C[vi, vj] + \
                         APad[vi, vk].astype("float16") * \
                         B_rescale[vj, vk].astype("float16")
+
     ir_module = MyModule
     sch = tvm.tir.Schedule(ir_module, debug_mask="all")
     block_b = sch.get_block("B")

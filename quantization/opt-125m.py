@@ -7,12 +7,10 @@ from auto_gptq import AutoGPTQForCausalLM, BaseQuantizeConfig
 import torch
 import time
 
+pretrained_model_dir = "facebook/opt-125m"
+quantized_model_dir = f"quantization/models/opt-125m-4bit"
 
-pretrained_model_dir = "/workspace/v-leiwang3/lowbit_model/oa_llama_30b/oasst-rlhf-2-llama-30b-7k-steps-xor"
-quantized_model_dir = "quantization/models/huggingchat-30b-rlhf-2-4bit"
-
-
-enable_quantize = False
+enable_quantize = True
 export_nnfusion = True
 tokenizer = AutoTokenizer.from_pretrained(pretrained_model_dir, use_fast=True)
 
@@ -47,7 +45,7 @@ print(pipeline("auto-gptq is")[0]["generated_text"])
 
 # export 2 onnx
 batch_size = 1
-seq_length = 256
+seq_length = 1
 input_shape = (batch_size, seq_length)
 onnx_name = f"qmodel_b{batch_size}s{seq_length}.onnx"
 output_path = os.path.join(quantized_model_dir, onnx_name)
@@ -59,7 +57,7 @@ if not export_nnfusion:
     for i in range(100):
         outputs = model(input_ids=input_ids)
     end = time.time()
-    print("time: ", (end - start) / 100 * 1000, "ms")
+    print("time", end - start)
     print(outputs.logits)
 else:
     import onnx
@@ -76,4 +74,6 @@ else:
     # convert model
     model_simp, check = simplify(model)
     sim_output_path = os.path.join(quantized_model_dir, f"qmodel_b{batch_size}s{seq_length}_sim.onnx")
-    onnx.save(model_simp, sim_output_path, save_as_external_data=True, all_tensors_to_one_file=False)
+    onnx.save(model_simp, sim_output_path)
+
+

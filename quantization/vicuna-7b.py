@@ -8,12 +8,12 @@ import torch
 import time
 
 
-pretrained_model_dir = "/workspace/v-leiwang3/lowbit_model/oa_llama_30b/oasst-rlhf-2-llama-30b-7k-steps-xor"
-quantized_model_dir = "quantization/models/huggingchat-30b-rlhf-2-4bit"
+pretrained_model_dir = "/workspace/v-leiwang3/lowbit_model/vicuna/vicuna-7b-v1.1"
+quantized_model_dir = "quantization/models/vicuna-7b-v1.1-4bit"
 
 
-enable_quantize = False
-export_nnfusion = True
+enable_quantize = True
+export_nnfusion = False
 tokenizer = AutoTokenizer.from_pretrained(pretrained_model_dir, use_fast=True)
 
 examples = [
@@ -47,7 +47,7 @@ print(pipeline("auto-gptq is")[0]["generated_text"])
 
 # export 2 onnx
 batch_size = 1
-seq_length = 256
+seq_length = 1
 input_shape = (batch_size, seq_length)
 onnx_name = f"qmodel_b{batch_size}s{seq_length}.onnx"
 output_path = os.path.join(quantized_model_dir, onnx_name)
@@ -77,3 +77,5 @@ else:
     model_simp, check = simplify(model)
     sim_output_path = os.path.join(quantized_model_dir, f"qmodel_b{batch_size}s{seq_length}_sim.onnx")
     onnx.save(model_simp, sim_output_path, save_as_external_data=True, all_tensors_to_one_file=False)
+
+

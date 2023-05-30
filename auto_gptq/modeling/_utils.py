@@ -56,9 +56,11 @@ def get_module_by_name(model, module_name: str):
             return module
 
 
-def make_quant(module, names, bits, groupsize, name='', use_triton=False, use_tvm=True):
+def make_quant(module, names, bits, groupsize, name='', use_triton=False, use_tvm=True, export_nnfusion=False):
     if use_triton:
         from ..nn_modules.qlinear_triton import QuantLinear
+    elif export_nnfusion:
+        from ..nn_modules.qlinear_nnfusion import QuantLinear
     elif use_tvm:
         from ..nn_modules.qlinear_tvm import QuantLinear
     else:
@@ -84,7 +86,7 @@ def make_quant(module, names, bits, groupsize, name='', use_triton=False, use_tv
             new_layer.device = ori_layer_device
             setattr(module, _name, new_layer.to(ori_layer_device))
     for name1, child in module.named_children():
-        make_quant(child, names, bits, groupsize, name + '.' + name1 if name != '' else name1, use_triton=use_triton, use_tvm=use_tvm)
+        make_quant(child, names, bits, groupsize, name + '.' + name1 if name != '' else name1, use_triton=use_triton, use_tvm=use_tvm, export_nnfusion=export_nnfusion)
 
 # def make_quant(module, names, bits, groupsize, use_triton=False, use_tvm=True):
 #     if use_triton:
@@ -125,11 +127,14 @@ def pack_model(
     group_size,
     use_triton=False,
     use_tvm=False,
+    export_nnfusion=False,
     autotune_warmup: bool = False,
     force_layer_back_to_cpu: bool = False
 ):
     if use_triton:
         from ..nn_modules.qlinear_triton import QuantLinear, autotune_warmup_linear
+    elif export_nnfusion:
+        from ..nn_modules.qlinear_nnfusion import QuantLinear
     elif use_tvm:
         from ..nn_modules.qlinear_tvm import QuantLinear
     else:
@@ -141,7 +146,7 @@ def pack_model(
     logger.info('Packing model...')
     layers = find_layers(model)
     layers = {n: layers[n] for n in quantizers}
-    make_quant(model, quantizers, bits, group_size, use_triton=use_triton, use_tvm=use_tvm)
+    make_quant(model, quantizers, bits, group_size, use_triton=use_triton, use_tvm=use_tvm, export_nnfusion=export_nnfusion)
     qlayers = find_layers(model, [QuantLinear])
     for name in qlayers:
         logger.info(name)
