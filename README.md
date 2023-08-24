@@ -1,4 +1,4 @@
-# GPTQ-tvm
+# GPTQ-tvm [MLC-LLM supports load auto-gptq prequantized checkpoints now, please move to this [pr](https://github.com/mlc-ai/mlc-llm/pull/694)]
 
 This is a toy project to implement GPTQ Kernel with TVM, which supports diverse lowbit dtypes in kernel de-compression tuning and trikcy support for dynamic shape.
 
