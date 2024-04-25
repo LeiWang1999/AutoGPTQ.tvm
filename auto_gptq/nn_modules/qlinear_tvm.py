@@ -23,7 +23,7 @@ class QuantLinear(nn.Module):
         self.bits = bits
         self.groupsize = groupsize if groupsize != -1 else infeatures
         self.register_buffer(
-            'qweight', torch.zeros((outfeatures, infeatures // 8 * 3), dtype=torch.int8 if not is_mlc_llm else torch.int32)
+            'qweight', torch.zeros((outfeatures, infeatures // 8 * bits), dtype=torch.int8 if not is_mlc_llm else torch.int32)
         )
         self.register_buffer('scales', torch.zeros((math.ceil(infeatures / self.groupsize), outfeatures), dtype=torch.float16))
         self.register_buffer('zeros', torch.zeros((math.ceil(infeatures / self.groupsize), outfeatures), dtype=torch.float16))

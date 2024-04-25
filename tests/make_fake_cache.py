@@ -10,11 +10,13 @@ shapes = [
     # (3072, 768),
     # (768, 3072),
     # (768, 768),
-    (43008, 14336),
-    (14336, 14336),
-    (57344, 14336),
-    (14336, 57344),
-
+    (6656, 6656),
+    (17920, 6656),
+    (6656, 17920),
+    # (43008, 14336),
+    # (14336, 14336),
+    # (57344, 14336),
+    # (14336, 57344)
 ]
 
 configurations = {
@@ -66,10 +68,19 @@ configurations = {
         "BK": 32,
         "raster": 0,
         "stage": 1
+    },
+    'm8192': {
+        "block_row_warps": 2,
+        "block_col_warps": 2,
+        "BM": 128,
+        "BN": 256,
+        "BK": 32,
+        "raster": 0,
+        "stage": 1
     }
 }
 
-m_candidates = [1, 16, 32, 64, 128, 256]
+m_candidates = [1, 16, 32, 64, 128, 256, 8192]
 
 handler_database = {}
 for n, k in shapes:
@@ -116,6 +127,6 @@ for n, k in shapes:
         handler_database[key][mx]['func_name'] = name
 
 print(handler_database)
-with open('./.cache/bloom.json', 'w') as f:
+with open('./.cache/huggingchat-30b.json', 'w') as f:
     import json
     json.dump(handler_database, f, indent=4)

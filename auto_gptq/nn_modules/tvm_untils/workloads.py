@@ -32,7 +32,6 @@ def _apply_gemv_schedule(ir_module, bits, K, num_warps=4):
     sch.reverse_compute_at(block_local_C, j, preserve_unit_loops=True)
     block_local_a_v = sch.get_loops(block_shared_local_A)[-1]
     sch.vectorize(block_local_a_v)
-    ctx = tvm.cuda(0)
     cuda_mod = tvm.build(sch.mod, target="cuda")
     return cuda_mod
 

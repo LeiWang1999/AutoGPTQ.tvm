@@ -48,7 +48,7 @@ K = 16384
 
 # tuning config
 target = tvm.target.Target("nvidia/geforce-rtx-3090")
-trails = 0
+trails = 1000
 
 def cuda_build(mod, target, _params):
     from tvm.driver import build as tvm_build

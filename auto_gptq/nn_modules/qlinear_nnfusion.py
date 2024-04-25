@@ -33,7 +33,6 @@ class QuantLinearFunction(torch.autograd.Function):
             scales,
             zeros,
             ).setType(x.type())
-        # g.shape(ret, need_type_check=True)  # 添加形状信息并启用类型检查
 
         return ret
 
@@ -55,7 +54,7 @@ class QuantLinear(nn.Module):
         self.bits = bits
         self.groupsize = groupsize if groupsize != -1 else infeatures
         self.register_buffer(
-            'qweight', torch.zeros((outfeatures, infeatures // 8 * 3), dtype=torch.int8)
+            'qweight', torch.zeros((outfeatures, infeatures // 8 * bits), dtype=torch.int8)
         )
         self.register_buffer('scales', torch.zeros((math.ceil(infeatures / self.groupsize), outfeatures), dtype=torch.float16))
         self.register_buffer('zeros', torch.zeros((math.ceil(infeatures / self.groupsize), outfeatures), dtype=torch.float16))

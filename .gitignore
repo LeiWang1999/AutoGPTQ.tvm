@@ -24,3 +24,7 @@
 /.pkl_memoize_py3/*
 
 /.nnidatabase/*
+
+**/__pycache__/**
+
+.cache/*
